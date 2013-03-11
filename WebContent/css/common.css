@@ -1,0 +1,22 @@
+@CHARSET "UTF-8";
+
+/*요소 여백 초기화*/
+html, body, div, span, dl, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, blockquote, p, address, pre, cite, form, fieldset, input, textarea, select,
+table, th, td{
+	margin:0;
+	padding:0;	
+	list-style-type: none;
+}
+
+img{
+	border:none;
+}
+
+#container {
+  text-align: center;
+}
+
+#content {
+  display: inline-block;
+}
+
