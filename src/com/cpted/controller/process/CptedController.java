@@ -49,18 +49,18 @@ public class CptedController extends BaseController{
 		return this.daoController;
 	}
 	
-	public boolean login(String id, String pw){
-		Login login=new Login(id,pw);
-		
-		boolean flag=login.checkUser();
-		
-		if(flag){
-			return daoController.getUserDao().login(md5(id),md5(pw));
-		}
-		else{
-			return false;
-		}
-	}
+	//public boolean login(String id, String pw){
+//		Login login=new Login(id,pw);
+//		
+//		boolean flag=login.checkUser();
+//		
+//		if(flag){
+//			return daoController.getUserDao().login(md5(id),md5(pw));
+//		}
+//		else{
+//			return false;
+//		}
+	//}
 	
 	
 	
