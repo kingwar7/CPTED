@@ -2,11 +2,14 @@ package com.cpted.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.cpted.controller.process.CptedController;
 
 /**
  * Servlet implementation class SseServlet
@@ -40,6 +43,12 @@ public class SseServlet extends HttpServlet {
 		
 		
 		//param으로 분기하여 원하는 데이터 만들어 와서 아래의 serverData에 json data 넣기
+		try {
+			ArrayList aaa=CptedController.getInstance().getDaoController().getAccidentDao().LoadAccidentAllCurrent();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		request.setCharacterEncoding("utf8");

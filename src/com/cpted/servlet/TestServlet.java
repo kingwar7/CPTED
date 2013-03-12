@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.cpted.controller.process.CptedController;
 
+
+
 /**
  * Servlet implementation class TestSerlvet
  */
@@ -38,8 +40,18 @@ public class TestServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String key1=request.getParameter("id");
+		String key2=request.getParameter("pw");
 		
-
+		boolean loginFlag=CptedController.getInstance().login(key1, key2);
+		
+		if(loginFlag){
+			
+		}
+		else{
+			
+		}
+		
 	}
 
 }
