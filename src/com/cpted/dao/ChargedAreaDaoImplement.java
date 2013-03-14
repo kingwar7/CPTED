@@ -286,7 +286,7 @@ public class ChargedAreaDaoImplement extends BaseDaoImplement implements
 		}
 
 	// 담당구역 수정
-	public void ModifyChagedArea(String name, String top, String bottom , String left , String right ) throws Exception {
+	public void ModifyChagedArea(int id , String name, String top, String bottom , String left , String right, int checked) throws Exception {
 		// TODO Auto-generated method stub
 		
 		try {
@@ -294,7 +294,7 @@ public class ChargedAreaDaoImplement extends BaseDaoImplement implements
 			PreparedStatement statement = null;
 			ResultSet resultSet = null;
 
-			sql = "insert into  chargedarea(name,top,left,right,bottom,checked,center_idx) values(?,?,?,?,?,1,?)";
+			sql = "update chargedarea set name = ? , top= ?,left =?,right = ?,bottom = ?,checked = ? where area_idx = ?";
 			
 			try {
 
@@ -318,7 +318,10 @@ public class ChargedAreaDaoImplement extends BaseDaoImplement implements
 
 					statement.setString(5, bottom);
 					
-					statement.setString(6, /*center_id*/);
+					statement.setString(6, Integer.toString(checked));
+					
+					statement.setString(6, Integer.toString(id));
+					
 					
 					statement.executeUpdate();
 					}
@@ -350,70 +353,7 @@ public class ChargedAreaDaoImplement extends BaseDaoImplement implements
 
 	}
 
-	// 담당구역 수정
-	public void ModifyChagedArea(String name, String top, String bottom , String left , String right ) throws Exception {
-			// TODO Auto-generated method stub
-			
-			try {
 
-				PreparedStatement statement = null;
-				ResultSet resultSet = null;
-
-				sql = "insert into  chargedarea(name,top,left,right,bottom,checked,center_idx) values(?,?,?,?,?,1,?)";
-				
-				try {
-
-					
-					Class.forName("com.mysql.jdbc.Driver");
-
-					connection = DriverManager.getConnection(
-							"jdbc:mysql://localhost:3306/cpteddb", "root",
-							"gpem4162");
-					if (connection != null) {
-
-						statement = connection.prepareStatement(sql);
-
-						statement.setString(1, name);
-
-						statement.setString(2, top);
-
-						statement.setString(3, left);
-						
-						statement.setString(4, right);
-
-						statement.setString(5, bottom);
-						
-						statement.setString(6, /*center_id*/);
-						
-						statement.executeUpdate();
-						}
-				}
-
-				catch (Exception e) {
-					System.out.println("Exception " + e.getMessage());
-					e.printStackTrace();
-				} finally {
-					try {
-
-						if (null != connection)
-							connection.close();
-						if (null != statement)
-							statement.close();
-						if (null != resultSet)
-							resultSet.close();
-
-					} catch (SQLException sqlException) {
-
-					}
-
-				}
-
-			} catch (Exception e) {
-				logger.error("AccidentDaoImplement : " + e.toString());
-				throw e;
-			}
-
-		}
 
 	// 담당구역 삭제
 	public void RemoveChagedArea(int id) throws Exception {
