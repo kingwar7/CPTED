@@ -555,7 +555,7 @@ public class MemberAndCurrentLocationDaoImplement extends BaseDaoImplement
 						memberPolice.setAge(Integer.parseInt((resultSet
 								.getString("age"))));
 						memberPolice.setGender(Integer.parseInt((resultSet
-								.getString("gender"))));
+								 .getString("gender"))));
 
 						memberPolice.setEtc(resultSet.getString("ect"));
 						MemberList.add(memberPolice);
