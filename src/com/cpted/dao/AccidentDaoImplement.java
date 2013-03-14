@@ -26,7 +26,7 @@ public class AccidentDaoImplement extends BaseDaoImplement implements
 			ResultSet resultSet = null;
 			ArrayList<AccidentEmergency> accidentEmergencyList = new ArrayList<AccidentEmergency>();
 
-			sql = "select * from Report where type=2 and checked=0";
+			sql = "select * from report where type=2 and checked=0";
 			try {
 
 				Class.forName("com.mysql.jdbc.Driver");
@@ -101,7 +101,7 @@ public class AccidentDaoImplement extends BaseDaoImplement implements
 			ResultSet resultSet = null;
 			ArrayList<AccidentGeneral> accidentGeneralList = new ArrayList<AccidentGeneral>();
 
-			sql = "select * from Report where type=1 and checked=0";
+			sql = "select * from report where type=1 and checked=0";
 			try {
 
 				Class.forName("com.mysql.jdbc.Driver");
@@ -180,7 +180,7 @@ public class AccidentDaoImplement extends BaseDaoImplement implements
 			ResultSet resultSet = null;
 			ArrayList<AccidentShare> accidentShareList = new ArrayList<AccidentShare>();
 
-			sql = "select * from Report where type=0 and checked=0";
+			sql = "select * from report where type=0 and checked=0";
 			try {
 
 				Class.forName("com.mysql.jdbc.Driver");
@@ -260,7 +260,7 @@ public class AccidentDaoImplement extends BaseDaoImplement implements
 			ResultSet resultSet = null;
 			ArrayList accidentAllList = new ArrayList();
 
-			sql = "select * from Report where checked=0";
+			sql = "select * from report where checked=0";
 			try {
 
 				Class.forName("com.mysql.jdbc.Driver");
@@ -369,6 +369,9 @@ public class AccidentDaoImplement extends BaseDaoImplement implements
 				}
 			});
 
+			
+//			AccidentBean a = (AccidentBean)accidentAllList.get(0);
+//			String sdf  = a.getLongtitude();
 			return accidentAllList;
 
 		} catch (Exception e) {
