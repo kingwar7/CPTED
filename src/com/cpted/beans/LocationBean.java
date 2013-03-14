@@ -2,13 +2,11 @@ package com.cpted.beans;
 
 public class LocationBean {
 
-	private String id;//?�송???�람
-
+	private String id;
 	private String longtitude;
 	private String latitude;
 	private String user_id;
-	
-	
+		
 	public String getID() {
 		return id;
 	}
