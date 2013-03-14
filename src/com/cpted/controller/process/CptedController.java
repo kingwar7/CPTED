@@ -2,13 +2,14 @@ package com.cpted.controller.process;
 
 import com.cpted.base.BaseController;
 import com.cpted.controller.*;
+import com.cpted.model.Login;
 
 public class CptedController extends BaseController{
 	private static CptedController sys=new CptedController();	
 	
 	private AccidentController accidentController;
 	private MemberController memberController;
-	
+	private DaoController daoController;
 	
 	static{
 		sys=new CptedController();		
@@ -25,6 +26,7 @@ public class CptedController extends BaseController{
 		System.out.println("CptedController initialize...");
 		accidentController=new AccidentController();
 		memberController=new MemberController();
+		daoController=new DaoController();
 	}
 	
 	public static synchronized CptedController getInstance(){
@@ -42,6 +44,26 @@ public class CptedController extends BaseController{
 	public MemberController getMemberController(){
 		return this.memberController;
 	}
+	
+	public DaoController getDaoController(){
+		return this.daoController;
+	}
+	
+	//public boolean login(String id, String pw){
+//		Login login=new Login(id,pw);
+//		
+//		boolean flag=login.checkUser();
+//		
+//		if(flag){
+//			return daoController.getUserDao().login(md5(id),md5(pw));
+//		}
+//		else{
+//			return false;
+//		}
+	//}
+	
+	
+	
 	
 	
 }

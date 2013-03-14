@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,6 +68,7 @@
 				        new google.maps.LatLng(52.517683, 13.394393)];
 			*/
 			//nearbyUser=[new google.maps.LatLng(data.)];
+			
 			nearbyUser=new Array();
 			for(var i=0; i<data.personTotal;i++){
 				nearbyUser.push(new google.maps.LatLng(data.personData[i].longitude , data.personData[i].latitude));				
@@ -236,6 +238,7 @@
 		</div>
     </div>
 	<%@include file="/jsp/footer.jsp"%>
+	
 </body>
 </html>
 <!--  
