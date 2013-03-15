@@ -44,7 +44,7 @@ public class AccidentDaoImplement extends BaseDaoImplement implements
 				if (connection != null) {
 
 					statement = connection.prepareStatement(sql);
-					statement.setString(1, /*center_id*/);
+////					statement.setString(1, /*center_id*/);
 					resultSet = statement.executeQuery();
 					while (resultSet.next()) {
 						AccidentEmergency accidentEmergency = new AccidentEmergency();
@@ -127,7 +127,7 @@ public class AccidentDaoImplement extends BaseDaoImplement implements
 				if (connection != null) {
 
 					statement = connection.prepareStatement(sql);
-					statement.setString(1, /*center_id*/);
+////					statement.setString(1, /*center_id*/);
 					resultSet = statement.executeQuery();
 					while (resultSet.next()) {
 						AccidentGeneral accidentGeneral = new AccidentGeneral();
@@ -218,7 +218,7 @@ public class AccidentDaoImplement extends BaseDaoImplement implements
 				if (connection != null) {
 
 					statement = connection.prepareStatement(sql);
-					statement.setString(1, /*center_id*/);					
+////					statement.setString(1, /*center_id*/);					
 					resultSet = statement.executeQuery();
 					while (resultSet.next()) {
 						AccidentShare accidentShare = new AccidentShare();
@@ -314,7 +314,7 @@ public class AccidentDaoImplement extends BaseDaoImplement implements
 					statement.setString(2, left);
 					statement.setString(3, top);
 					statement.setString(4, bottom);
-					statement.setString(5, /*center_id*/);
+////					statement.setString(5, /*center_id*/);
 					resultSet = statement.executeQuery();
 					while (resultSet.next()) {
 						AccidentShare accidentShare = new AccidentShare();
@@ -404,7 +404,7 @@ public class AccidentDaoImplement extends BaseDaoImplement implements
 				if (connection != null) {
 					// Use the connection to create the SQL statement.
 					statement = connection.prepareStatement(sql);
-					statement.setString(1, /*center_id*/);		
+////					statement.setString(1, /*center_id*/);		
 					resultSet = statement.executeQuery();
 					while (resultSet.next()) {
 

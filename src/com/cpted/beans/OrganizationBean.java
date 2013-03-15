@@ -1,16 +1,19 @@
 package com.cpted.beans;
 
 public class OrganizationBean {
-	private String ID;
+	private String id;
 	private String pw;
 	private String code;
-	
+	private String name;
+	private String etc;
+//	private int center_idx;
+		
 	
 	public String getID() {
-		return ID;
+		return id;
 	}
 	public void setID(String iD) {
-		ID = iD;
+		id = iD;
 	}
 	public String getPw() {
 		return pw;
@@ -24,4 +27,22 @@ public class OrganizationBean {
 	public void setCode(String code) {
 		this.code = code;
 	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getEtc() {
+		return etc;
+	}
+	public void setEtc(String etc) {
+		this.etc = etc;
+	}
+//	public int getCenterID() {
+//		return center_idx;
+//	}
+//	public void setCenterID(int CenterID) {
+//		this.center_idx = CenterID;
+//	}
 }
