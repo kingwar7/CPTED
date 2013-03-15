@@ -1,5 +1,7 @@
 package com.cpted.controller.process;
 
+import javax.servlet.http.HttpSession;
+
 import com.cpted.base.BaseController;
 import com.cpted.beans.OrganizationBean;
 import com.cpted.controller.*;
@@ -70,20 +72,18 @@ public class CptedController extends BaseController {
 					ret = -3;
 				} else {
 
-					if (daoController.getOrganizationDao().SignUp(
-							organization)) {
+					if (daoController.getOrganizationDao().SignUp(organization)) {
 						ret = 1;
 						// 회원가입됨
 					} else {
 
 						ret = -1;
-						// 실패 
+						// 실패
 					}
 				}
 			} else {
 				ret = -2;
 				// 코드 불일치
-
 			}
 
 		} catch (Exception e) {
@@ -91,9 +91,33 @@ public class CptedController extends BaseController {
 			e.printStackTrace();
 		}
 		return ret;
+	}
+
+	public boolean checklogIn(Login login) {
+		boolean checkedLogin = false;
+		try {
+			checkedLogin = daoController.getOrganizationDao().checkLogin(
+					login.getID(), login.getPassword());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return checkedLogin;
 
 	}
-	
-	
+
+	public String getCenterIDx(Login login) {
+		String centerid = "";
+		try {
+			centerid = daoController.getOrganizationDao().getCenterIDx(
+					login.getID(), login.getPassword());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return centerid;
+	}
 
 }

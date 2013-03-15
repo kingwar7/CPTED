@@ -80,14 +80,14 @@ public class OrganizationDaoImplement extends BaseDaoImplement implements
 	}
 
 	// 로그인 id,pw검사
-	public boolean checkLogin(OrganizationBean organization) throws Exception {
+	public boolean checkLogin(String id, String password) throws Exception {
 		// TODO Auto-generated method stub
 		boolean ret = false;
 		try {
 
 			PreparedStatement statement = null;
 			ResultSet resultSet = null;
-			sql = "select * from center where id =? password =? ";
+			sql = "select * from center where id =? and password =? ";
 			try {
 
 				Class.forName("com.mysql.jdbc.Driver");
@@ -99,17 +99,18 @@ public class OrganizationDaoImplement extends BaseDaoImplement implements
 
 					statement = connection.prepareStatement(sql);
 
-					statement.setString(1, organization.getID());
-					statement.setString(2, organization.getPw());
+					statement.setString(1, id);
+					statement.setString(2, password);
 
 					resultSet = statement.executeQuery();
 
 					if (resultSet.next()) {
-						organization.setName(resultSet.getString("name"));
+						ret = true;
 						statement.close();
 						return true;
 						// 로그인성공
 					} else {
+						ret = false;
 						statement.close();
 						return false;
 						// 로그인 실패
@@ -171,11 +172,12 @@ public class OrganizationDaoImplement extends BaseDaoImplement implements
 					resultSet = statement.executeQuery();
 
 					if (resultSet.next()) {
-
+						ret = true;
 						statement.close();
 						return true;
 						// 로그인성공
 					} else {
+						ret = false;
 						statement.close();
 						return false;
 						// 로그인 실패
@@ -328,6 +330,67 @@ public class OrganizationDaoImplement extends BaseDaoImplement implements
 		}
 
 		return ret;
+	}
+	
+	
+	
+	//get center_idx 고유 id
+	
+	
+	public String getCenterIDx(String id, String password)throws Exception {
+		String centerIDx = "";
+		try {
+			
+			PreparedStatement statement = null;
+			ResultSet resultSet = null;
+			sql = "select * from center where id = ? and password = ? limit 1";
+			try {
+
+				Class.forName("com.mysql.jdbc.Driver");
+
+				connection = DriverManager.getConnection(
+						"jdbc:mysql://localhost:3306/cpteddb", "root",
+						"gpem4162");
+				if (connection != null) {
+
+					statement = connection.prepareStatement(sql);
+
+					statement.setString(1, id);
+					statement.setString(2, password);
+					resultSet = statement.executeQuery();
+					centerIDx = resultSet.getString("center_idx");
+					
+
+				}
+			}
+
+			catch (Exception e) {
+				System.out.println("Exception " + e.getMessage());
+				e.printStackTrace();
+			} finally {
+				try {
+
+					if (null != connection)
+						connection.close();
+					if (null != statement)
+						statement.close();
+					if (null != resultSet)
+						resultSet.close();
+
+				} catch (SQLException sqlException) {
+
+				}
+
+			}
+
+		} catch (Exception e) {
+			logger.error("AccidentDaoImplement : " + e.toString());
+			throw e;
+		}
+
+		return centerIDx;
+		
+		
 	}
 
 }

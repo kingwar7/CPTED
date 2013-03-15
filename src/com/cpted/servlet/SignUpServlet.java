@@ -41,10 +41,10 @@ public class SignUpServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String id = request.getParameter("id");
-		String password = request.getParameter("pw");
-		String code = request.getParameter("code");
-		String name = request.getParameter("name");
+		String id = request.getParameter("ID");
+		String password = request.getParameter("PASSWORD");
+		String code = request.getParameter("CODE");
+		String name = request.getParameter("NAME");
 
 		OrganizationBean organization = new OrganizationBean();
 		organization.setID(id);

@@ -7,7 +7,7 @@ public interface OrganizationDao {
 	public boolean SignUp(OrganizationBean organization) throws Exception;
 
 	// 로그인 id,pw검사
-	public boolean checkLogin(OrganizationBean organization) throws Exception;
+		public boolean checkLogin(String id, String password) throws Exception;
 
 	// 아이디 중복
 	// 중복이면 True 출력
@@ -22,5 +22,7 @@ public interface OrganizationDao {
 	// code는 바꿀 수 없다.
 	public boolean deleteOrganization(OrganizationBean organization)
 			throws Exception;
+	
+	public String getCenterIDx(String id, String password)throws Exception;
 
 }
