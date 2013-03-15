@@ -44,10 +44,7 @@ public class LocationDaoImplement extends BaseDaoImplement implements LocationDa
 					
 					
 					resultSet = statement.executeQuery();
-					
-					
-					
-
+			
 					location.setID(resultSet
 								.getString("location_idx"));
 					location.setUserID(resultSet
@@ -78,11 +75,7 @@ public class LocationDaoImplement extends BaseDaoImplement implements LocationDa
 
 				}
 				
-				
 			}
-			
-		
-			
 
 		}
 

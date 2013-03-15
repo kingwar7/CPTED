@@ -20,13 +20,9 @@ public interface ChargedAreaDao {
 	// 담당구역 수정
 	public void ModifyChagedArea(int id , String name, String top, String bottom , String left , String right, int checked) throws Exception;
 	
-	// 담당구역 삭제
-    public void RemoveChagedArea(int id) throws Exception;
-    
-		
-		
 	
-		
-	
+ // 담당구역 삭제
+ 	public void RemoveChagedArea(ChargedAreaBean chargedArea) throws Exception;
+ 	
 	
 }

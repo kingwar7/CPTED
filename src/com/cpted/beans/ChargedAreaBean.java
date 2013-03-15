@@ -2,7 +2,7 @@ package com.cpted.beans;
 
 public class ChargedAreaBean {
 	
-	private int id;
+//	private int id;
 	private double top;
 	private double left;
 	private double right;
@@ -19,12 +19,12 @@ public class ChargedAreaBean {
 		this.name = name;
 	}
 	
-	public int getID() {
-		return id;
-	}
-	public void setID(int id) {
-		this.id = id;
-	}
+//	public int getID() {
+//		return id;
+//	}
+//	public void setID(int id) {
+//		this.id = id;
+//	}
 	
 	public double getTop() {
 		return top;

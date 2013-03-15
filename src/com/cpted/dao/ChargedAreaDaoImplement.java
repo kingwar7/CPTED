@@ -20,9 +20,10 @@ public class ChargedAreaDaoImplement extends BaseDaoImplement implements
 	String sql = "";
 
 	// 적용된 담당구역 전체 리스트
-	public ArrayList<ChargedAreaBean> GetCheckedChagedAreaList() throws Exception {
+	public ArrayList<ChargedAreaBean> GetCheckedChagedAreaList()
+			throws Exception {
 		// TODO Auto-generated method stub
-		
+
 		ArrayList<ChargedAreaBean> chargedAreaList = new ArrayList<ChargedAreaBean>();
 		try {
 
@@ -41,18 +42,22 @@ public class ChargedAreaDaoImplement extends BaseDaoImplement implements
 
 					statement = connection.prepareStatement(sql);
 
-					statement.setString(1, /*center_id*/);
+					// // statement.setString(1, /*center_id*/);
 
 					resultSet = statement.executeQuery();
 
 					while (resultSet.next()) {
 						ChargedAreaBean chargedArea = new ChargedAreaBean();
 
-						chargedArea.setID(Integer.parseInt(resultSet.getString("area_idx")));
-						chargedArea.setLeft(Double.parseDouble(resultSet.getString("left")));
-						chargedArea.setRight(Double.parseDouble(resultSet.getString("right")));
-						chargedArea.setBottom(Double.parseDouble(resultSet.getString("bottom")));
-						chargedArea.setTop(Double.parseDouble(resultSet.getString("top")));
+						// chargedArea.setID(Integer.parseInt(resultSet.getString("area_idx")));
+						chargedArea.setLeft(Double.parseDouble(resultSet
+								.getString("left")));
+						chargedArea.setRight(Double.parseDouble(resultSet
+								.getString("right")));
+						chargedArea.setBottom(Double.parseDouble(resultSet
+								.getString("bottom")));
+						chargedArea.setTop(Double.parseDouble(resultSet
+								.getString("top")));
 						chargedAreaList.add(chargedArea);
 					}
 				}
@@ -87,76 +92,77 @@ public class ChargedAreaDaoImplement extends BaseDaoImplement implements
 
 	// 아이디에 따른 담당구역
 	public ChargedAreaBean GetChargedArea(int id) throws Exception {
-			// TODO Auto-generated method stub
-			
-			ChargedAreaBean chargedArea = new ChargedAreaBean();
+		// TODO Auto-generated method stub
 
+		ChargedAreaBean chargedArea = new ChargedAreaBean();
+
+		try {
+
+			PreparedStatement statement = null;
+			ResultSet resultSet = null;
+
+			sql = "select * from chagedarea where chagedarea_id = ? and center_idx = ? ";
 			try {
 
-				PreparedStatement statement = null;
-				ResultSet resultSet = null;
+				Class.forName("com.mysql.jdbc.Driver");
 
-				sql = "select * from chagedarea where chagedarea_id = ? and center_idx = ? ";
-				try {
+				connection = DriverManager.getConnection(
+						"jdbc:mysql://localhost:3306/cpteddb", "root",
+						"gpem4162");
+				if (connection != null) {
 
-					Class.forName("com.mysql.jdbc.Driver");
+					statement = connection.prepareStatement(sql);
 
-					connection = DriverManager.getConnection(
-							"jdbc:mysql://localhost:3306/cpteddb", "root",
-							"gpem4162");
-					if (connection != null) {
+					statement.setString(1, Integer.toString(id));
 
-						statement = connection.prepareStatement(sql);
+					// // statement.setString(2, /*center_id*/);
 
-						statement.setString(1, Integer.toString(id));
+					resultSet = statement.executeQuery();
 
-						statement.setString(2, /*center_id*/);
-
-						resultSet = statement.executeQuery();
-
-						
-							
-							chargedArea.setID(Integer.parseInt(resultSet.getString("area_idx")));
-							chargedArea.setLeft(Double.parseDouble(resultSet.getString("left")));
-							chargedArea.setRight(Double.parseDouble(resultSet.getString("right")));
-							chargedArea.setBottom(Double.parseDouble(resultSet.getString("bottom")));
-							chargedArea.setTop(Double.parseDouble(resultSet.getString("top")));
-							
-						
-					}
-				}
-
-				catch (Exception e) {
-					System.out.println("Exception " + e.getMessage());
-					e.printStackTrace();
-				} finally {
-					try {
-
-						if (null != connection)
-							connection.close();
-						if (null != statement)
-							statement.close();
-						if (null != resultSet)
-							resultSet.close();
-
-					} catch (SQLException sqlException) {
-
-					}
+					// chargedArea.setID(Integer.parseInt(resultSet.getString("area_idx")));
+					chargedArea.setLeft(Double.parseDouble(resultSet
+							.getString("left")));
+					chargedArea.setRight(Double.parseDouble(resultSet
+							.getString("right")));
+					chargedArea.setBottom(Double.parseDouble(resultSet
+							.getString("bottom")));
+					chargedArea.setTop(Double.parseDouble(resultSet
+							.getString("top")));
 
 				}
-
-			} catch (Exception e) {
-				logger.error("AccidentDaoImplement : " + e.toString());
-				throw e;
 			}
 
-			return chargedArea;
+			catch (Exception e) {
+				System.out.println("Exception " + e.getMessage());
+				e.printStackTrace();
+			} finally {
+				try {
+
+					if (null != connection)
+						connection.close();
+					if (null != statement)
+						statement.close();
+					if (null != resultSet)
+						resultSet.close();
+
+				} catch (SQLException sqlException) {
+
+				}
+
+			}
+
+		} catch (Exception e) {
+			logger.error("AccidentDaoImplement : " + e.toString());
+			throw e;
 		}
+
+		return chargedArea;
+	}
 
 	// 로그인된 센터의 담당 구역 리스트 , 리스트에 보여줄 전부
 	public ArrayList<ChargedAreaBean> GetAllChagedAreaList() throws Exception {
 		// TODO Auto-generated method stub
-		
+
 		ArrayList<ChargedAreaBean> chargedAreaList = new ArrayList<ChargedAreaBean>();
 		try {
 
@@ -175,19 +181,24 @@ public class ChargedAreaDaoImplement extends BaseDaoImplement implements
 
 					statement = connection.prepareStatement(sql);
 
-					statement.setString(1, /*center_id*/);
+					// // statement.setString(1, /*center_id*/);
 
 					resultSet = statement.executeQuery();
 
 					while (resultSet.next()) {
 						ChargedAreaBean chargedArea = new ChargedAreaBean();
 
-						chargedArea.setID(Integer.parseInt(resultSet.getString("area_idx")));
-						chargedArea.setLeft(Double.parseDouble(resultSet.getString("left")));
-						chargedArea.setRight(Double.parseDouble(resultSet.getString("right")));
-						chargedArea.setBottom(Double.parseDouble(resultSet.getString("bottom")));
-						chargedArea.setTop(Double.parseDouble(resultSet.getString("top")));
-						chargedArea.setCheck(Integer.parseInt(resultSet.getString("checked")));
+						// chargedArea.setID(Integer.parseInt(resultSet.getString("area_idx")));
+						chargedArea.setLeft(Double.parseDouble(resultSet
+								.getString("left")));
+						chargedArea.setRight(Double.parseDouble(resultSet
+								.getString("right")));
+						chargedArea.setBottom(Double.parseDouble(resultSet
+								.getString("bottom")));
+						chargedArea.setTop(Double.parseDouble(resultSet
+								.getString("top")));
+						chargedArea.setCheck(Integer.parseInt(resultSet
+								.getString("checked")));
 						chargedAreaList.add(chargedArea);
 					}
 				}
@@ -221,84 +232,19 @@ public class ChargedAreaDaoImplement extends BaseDaoImplement implements
 	}
 
 	// 담당 구역 추가
-	public void AddChagedArea(String name, String top, String bottom , String left , String right ) throws Exception {
-			// TODO Auto-generated method stub
-			
-			try {
-
-				PreparedStatement statement = null;
-				ResultSet resultSet = null;
-
-				sql = "insert into  chargedarea(name,top,left,right,bottom,checked,center_idx) values(?,?,?,?,?,1,?)";
-				
-				try {
-
-					
-					Class.forName("com.mysql.jdbc.Driver");
-
-					connection = DriverManager.getConnection(
-							"jdbc:mysql://localhost:3306/cpteddb", "root",
-							"gpem4162");
-					if (connection != null) {
-
-						statement = connection.prepareStatement(sql);
-
-						statement.setString(1, name);
-
-						statement.setString(2, top);
-
-						statement.setString(3, left);
-						
-						statement.setString(4, right);
-
-						statement.setString(5, bottom);
-						
-						statement.setString(6, /*center_id*/);
-						
-						statement.executeUpdate();
-						}
-				}
-
-				catch (Exception e) {
-					System.out.println("Exception " + e.getMessage());
-					e.printStackTrace();
-				} finally {
-					try {
-
-						if (null != connection)
-							connection.close();
-						if (null != statement)
-							statement.close();
-						if (null != resultSet)
-							resultSet.close();
-
-					} catch (SQLException sqlException) {
-
-					}
-
-				}
-
-			} catch (Exception e) {
-				logger.error("AccidentDaoImplement : " + e.toString());
-				throw e;
-			}
-
-		}
-
-	// 담당구역 수정
-	public void ModifyChagedArea(int id , String name, String top, String bottom , String left , String right, int checked) throws Exception {
+	public void AddChagedArea(String name, String top, String bottom,
+			String left, String right) throws Exception {
 		// TODO Auto-generated method stub
-		
+
 		try {
 
 			PreparedStatement statement = null;
 			ResultSet resultSet = null;
 
-			sql = "update chargedarea set name = ? , top= ?,left =?,right = ?,bottom = ?,checked = ? where area_idx = ?";
-			
+			sql = "insert into  chargedarea(name,top,left,right,bottom,checked,center_idx) values(?,?,?,?,?,1,?)";
+
 			try {
 
-				
 				Class.forName("com.mysql.jdbc.Driver");
 
 				connection = DriverManager.getConnection(
@@ -313,18 +259,15 @@ public class ChargedAreaDaoImplement extends BaseDaoImplement implements
 					statement.setString(2, top);
 
 					statement.setString(3, left);
-					
+
 					statement.setString(4, right);
 
 					statement.setString(5, bottom);
-					
-					statement.setString(6, Integer.toString(checked));
-					
-					statement.setString(6, Integer.toString(id));
-					
-					
+
+					// // statement.setString(6, /*center_id*/);
+
 					statement.executeUpdate();
-					}
+				}
 			}
 
 			catch (Exception e) {
@@ -353,61 +296,125 @@ public class ChargedAreaDaoImplement extends BaseDaoImplement implements
 
 	}
 
+	// 담당구역 수정
+	public void ModifyChagedArea(int id, String name, String top,
+			String bottom, String left, String right, int checked)
+			throws Exception {
+		// TODO Auto-generated method stub
 
+		try {
 
-	// 담당구역 삭제
-	public void RemoveChagedArea(int id) throws Exception {
-					// TODO Auto-generated method stub
-					
-					try {
+			PreparedStatement statement = null;
+			ResultSet resultSet = null;
 
-						PreparedStatement statement = null;
-						ResultSet resultSet = null;
+			sql = "update chargedarea set name = ? , top= ?,left =?,right = ?,bottom = ?,checked = ? where area_idx = ?";
 
-						sql = "delete from chargedarea where area_idx = ?";
-						
-						try {
+			try {
 
-							
-							Class.forName("com.mysql.jdbc.Driver");
+				Class.forName("com.mysql.jdbc.Driver");
 
-							connection = DriverManager.getConnection(
-									"jdbc:mysql://localhost:3306/cpteddb", "root",
-									"gpem4162");
-							if (connection != null) {
+				connection = DriverManager.getConnection(
+						"jdbc:mysql://localhost:3306/cpteddb", "root",
+						"gpem4162");
+				if (connection != null) {
 
-								statement = connection.prepareStatement(sql);
+					statement = connection.prepareStatement(sql);
 
-								statement.setString(1, Integer.toString(id));
+					statement.setString(1, name);
 
-								
-								statement.executeUpdate();
-								}
-						}
+					statement.setString(2, top);
 
-						catch (Exception e) {
-							System.out.println("Exception " + e.getMessage());
-							e.printStackTrace();
-						} finally {
-							try {
+					statement.setString(3, left);
 
-								if (null != connection)
-									connection.close();
-								if (null != statement)
-									statement.close();
-								if (null != resultSet)
-									resultSet.close();
+					statement.setString(4, right);
 
-							} catch (SQLException sqlException) {
+					statement.setString(5, bottom);
 
-							}
+					statement.setString(6, Integer.toString(checked));
 
-						}
+					statement.setString(6, Integer.toString(id));
 
-					} catch (Exception e) {
-						logger.error("AccidentDaoImplement : " + e.toString());
-						throw e;
-					}
+					statement.executeUpdate();
+				}
+			}
+
+			catch (Exception e) {
+				System.out.println("Exception " + e.getMessage());
+				e.printStackTrace();
+			} finally {
+				try {
+
+					if (null != connection)
+						connection.close();
+					if (null != statement)
+						statement.close();
+					if (null != resultSet)
+						resultSet.close();
+
+				} catch (SQLException sqlException) {
 
 				}
+
+			}
+
+		} catch (Exception e) {
+			logger.error("AccidentDaoImplement : " + e.toString());
+			throw e;
+		}
+
+	}
+
+	// 담당구역 삭제
+	public void RemoveChagedArea(ChargedAreaBean chargedArea) throws Exception {
+		// TODO Auto-generated method stub
+
+		try {
+
+			PreparedStatement statement = null;
+			ResultSet resultSet = null;
+
+			sql = "delete from chargedarea where name = ?";
+
+			try {
+
+				Class.forName("com.mysql.jdbc.Driver");
+
+				connection = DriverManager.getConnection(
+						"jdbc:mysql://localhost:3306/cpteddb", "root",
+						"gpem4162");
+				if (connection != null) {
+
+					statement = connection.prepareStatement(sql);
+
+					statement.setString(1, chargedArea.getName());
+
+					statement.executeUpdate();
+				}
+			}
+
+			catch (Exception e) {
+				System.out.println("Exception " + e.getMessage());
+				e.printStackTrace();
+			} finally {
+				try {
+
+					if (null != connection)
+						connection.close();
+					if (null != statement)
+						statement.close();
+					if (null != resultSet)
+						resultSet.close();
+
+				} catch (SQLException sqlException) {
+
+				}
+
+			}
+
+		} catch (Exception e) {
+			logger.error("AccidentDaoImplement : " + e.toString());
+			throw e;
+		}
+
+	}
 }

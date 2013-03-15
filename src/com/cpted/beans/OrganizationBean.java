@@ -6,7 +6,7 @@ public class OrganizationBean {
 	private String code;
 	private String name;
 	private String etc;
-	private int center_idx;
+//	private int center_idx;
 		
 	
 	public String getID() {
@@ -39,10 +39,10 @@ public class OrganizationBean {
 	public void setEtc(String etc) {
 		this.etc = etc;
 	}
-	public int getCenterID() {
-		return center_idx;
-	}
-	public void setCenterID(int CenterID) {
-		this.center_idx = CenterID;
-	}
+//	public int getCenterID() {
+//		return center_idx;
+//	}
+//	public void setCenterID(int CenterID) {
+//		this.center_idx = CenterID;
+//	}
 }

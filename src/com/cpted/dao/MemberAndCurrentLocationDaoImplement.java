@@ -69,7 +69,7 @@ public class MemberAndCurrentLocationDaoImplement extends BaseDaoImplement
 							4,
 							Integer.toString(Integer.parseInt(latitude)
 									- distance));
-					statement.setString(5, /*logined center_id*/);
+////					statement.setString(5, /*logined center_id*/);
 					resultSet = statement.executeQuery();
 					while (resultSet.next()) {
 						MemberCrimeWatch memberCrimeWatch = new MemberCrimeWatch();
@@ -171,7 +171,7 @@ public class MemberAndCurrentLocationDaoImplement extends BaseDaoImplement
 							4,
 							Integer.toString(Integer.parseInt(latitude)
 									- distance));
-					statement.setString(5, /*logined center_id*/);
+////					statement.setString(5, /*logined center_id*/);
 					resultSet = statement.executeQuery();
 					while (resultSet.next()) {
 						MemberGeneralUser memberGeneralUser = new MemberGeneralUser();
@@ -274,7 +274,7 @@ public class MemberAndCurrentLocationDaoImplement extends BaseDaoImplement
 							4,
 							Integer.toString(Integer.parseInt(latitude)
 									- distance));
-					statement.setString(5, /*logined center_id*/);
+////					statement.setString(5, /*logined center_id*/);
 					resultSet = statement.executeQuery();
 					while (resultSet.next()) {
 						MemberPolice memberPolice = new MemberPolice();
@@ -365,7 +365,7 @@ public class MemberAndCurrentLocationDaoImplement extends BaseDaoImplement
 							Integer.toString(Integer.parseInt(top)));
 					statement.setString(4,
 							Integer.toString(Integer.parseInt(bottom)));
-					statement.setString(5, /*logined center_id*/);
+////					statement.setString(5, /*logined center_id*/);
 					resultSet = statement.executeQuery();
 					while (resultSet.next()) {
 
@@ -458,7 +458,7 @@ public class MemberAndCurrentLocationDaoImplement extends BaseDaoImplement
 							Integer.toString(Integer.parseInt(top)));
 					statement.setString(4,
 							Integer.toString(Integer.parseInt(bottom)));
-					statement.setString(5, /*logined center_id*/);
+	////				statement.setString(5, /*logined center_id*/);
 					resultSet = statement.executeQuery();
 					while (resultSet.next()) {
 
@@ -541,7 +541,7 @@ public class MemberAndCurrentLocationDaoImplement extends BaseDaoImplement
 							Integer.toString(Integer.parseInt(top)));
 					statement.setString(4,
 							Integer.toString(Integer.parseInt(bottom)));
-					statement.setString(5, /*logined center_id*/);
+////					statement.setString(5, /*logined center_id*/);
 					resultSet = statement.executeQuery();
 					while (resultSet.next()) {
 
