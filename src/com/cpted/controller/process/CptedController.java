@@ -54,7 +54,7 @@ public class CptedController extends BaseController {
 	// return -2 => code error
 	// return -1 => signup error
 	// return 1 => ok
-	// return -1 => idduplicate
+	// return -3 => idduplicate
 	public int signUp(OrganizationBean organization) {
 
 		int ret = 0;

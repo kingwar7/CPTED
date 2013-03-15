@@ -57,9 +57,7 @@ public class TestServlet extends HttpServlet {
 		String password = request.getParameter("pw");
 		String code = request.getParameter("code");
 		String name = request.getParameter("name");
-		
-		
-		
+				
 		OrganizationBean organization = new OrganizationBean();
 		organization.setID(id);
 		organization.setPw(password);
@@ -68,8 +66,7 @@ public class TestServlet extends HttpServlet {
 		
 		
 		int ret = CptedController.getInstance().signUp(organization);
-		
-		
+
 		
 	}
 

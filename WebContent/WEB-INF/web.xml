@@ -50,8 +50,14 @@
     <servlet-name>MovePageServlet</servlet-name>
     <url-pattern>/MovePageServlet</url-pattern>
   </servlet-mapping>
-  
-  
-  
-  
+  <servlet>
+    <description></description>
+    <display-name>SignUpServlet</display-name>
+    <servlet-name>SignUpServlet</servlet-name>
+    <servlet-class>com.cpted.servlet.SignUpServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SignUpServlet</servlet-name>
+    <url-pattern>/SignUpServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
