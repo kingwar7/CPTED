@@ -1,18 +1,24 @@
 package com.cpted.controller.process;
 
+import javax.servlet.http.HttpSession;
+
 import com.cpted.base.BaseController;
+import com.cpted.beans.AccidentEmergency;
+import com.cpted.beans.AccidentGeneral;
+import com.cpted.beans.AccidentShare;
+import com.cpted.beans.OrganizationBean;
 import com.cpted.controller.*;
 import com.cpted.model.Login;
 
-public class CptedController extends BaseController{
-	private static CptedController sys=new CptedController();	
-	
+public class CptedController extends BaseController {
+	private static CptedController sys = new CptedController();
+
 	private AccidentController accidentController;
 	private MemberController memberController;
 	private DaoController daoController;
-	
-	static{
-		sys=new CptedController();		
+
+	static {
+		sys = new CptedController();
 		try {
 			sys.initialize();
 		} catch (Exception e) {
@@ -21,49 +27,156 @@ public class CptedController extends BaseController{
 			e.printStackTrace();
 		}
 	}
-	
-	public void initialize() throws Exception{
+
+	public void initialize() throws Exception {
 		System.out.println("CptedController initialize...");
-		accidentController=new AccidentController();
-		memberController=new MemberController();
-		daoController=new DaoController();
+		accidentController = new AccidentController();
+		memberController = new MemberController();
+		daoController = new DaoController();
 	}
-	
-	public static synchronized CptedController getInstance(){
+
+	public static synchronized CptedController getInstance() {
 		if (sys == null) {
-			sys=new CptedController();
-			System.out.println("Because sys null => CptedController initialize...");
-        }
-		return sys;		
+			sys = new CptedController();
+			System.out
+					.println("Because sys null => CptedController initialize...");
+		}
+		return sys;
 	}
-	
-	public AccidentController getAccidentController(){
+
+	public AccidentController getAccidentController() {
 		return this.accidentController;
 	}
-	
-	public MemberController getMemberController(){
+
+	public MemberController getMemberController() {
 		return this.memberController;
 	}
-	
-	public DaoController getDaoController(){
+
+	public DaoController getDaoController() {
 		return this.daoController;
 	}
+
+	// return -2 => code error
+	// return -1 => signup error
+	// return 1 => ok
+	// return -3 => idduplicate
+	public int signUp(OrganizationBean organization) {
+
+		int ret = 0;
+		try {
+			boolean checkedCode = daoController.getCentercodeDao()
+					.CheckOrganizationAuthCode(organization.getCode());
+
+			if (checkedCode) {
+
+				if (daoController.getOrganizationDao()
+						.idDuplicate(organization)) {
+					// 아이디 중복
+					ret = -3;
+				} else {
+
+					if (daoController.getOrganizationDao().SignUp(organization)) {
+						ret = 1;
+						// 회원가입됨
+					} else {
+
+						ret = -1;
+						// 실패
+					}
+				}
+			} else {
+				ret = -2;
+				// 코드 불일치
+			}
+
+		} catch (Exception e) {
+			System.out.println("Exception " + e.getMessage());
+			e.printStackTrace();
+		}
+		return ret;
+	}
+
+	public boolean checklogIn(Login login) {
+		boolean checkedLogin = false;
+		try {
+			checkedLogin = daoController.getOrganizationDao().checkLogin(
+					login.getID(), login.getPassword());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return checkedLogin;
+
+	}
+
+	//로그인시에 center의 고유값 가져와서 session에 넣어두기 위해서
+	public String getCenterIDx(Login login) {
+		String centerid = "";
+		try {
+			centerid = daoController.getOrganizationDao().getCenterIDx(
+					login.getID(), login.getPassword());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return centerid;
+	}
 	
-	//public boolean login(String id, String pw){
-//		Login login=new Login(id,pw);
-//		
-//		boolean flag=login.checkUser();
-//		
-//		if(flag){
-//			return daoController.getUserDao().login(md5(id),md5(pw));
-//		}
-//		else{
-//			return false;
-//		}
-	//}
 	
+	public boolean AddAccidentGeneral(AccidentGeneral accidentGeneral)
+	{
 	
+		boolean ret=false;
+		
+		try {
+			ret = daoController.getAccidentDao().AddAccidentGeneral(accidentGeneral);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return ret;
+		
 	
+	}
+
+	public boolean AddAccidentShare(AccidentShare accidentShare)
+	{
 	
+		boolean ret=false;
+		
+		try {
+			ret = daoController.getAccidentDao().AddAccidentShare(accidentShare);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return ret;
+		
+	
+	}
+	
+	public boolean AddAccidentEmergency(AccidentEmergency accidentEmergency)
+	{
+	
+		boolean ret=false;
+		
+		try {
+			ret = daoController.getAccidentDao().AddAccidentEmergency(accidentEmergency);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return ret;
+		
+	
+	}
 	
 }

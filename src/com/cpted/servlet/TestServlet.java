@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.cpted.beans.OrganizationBean;
 import com.cpted.controller.process.CptedController;
 
 
@@ -51,6 +52,21 @@ public class TestServlet extends HttpServlet {
 //		else{
 //			
 //		}
+		
+		String id = request.getParameter("id");
+		String password = request.getParameter("pw");
+		String code = request.getParameter("code");
+		String name = request.getParameter("name");
+				
+		OrganizationBean organization = new OrganizationBean();
+		organization.setID(id);
+		organization.setPw(password);
+		organization.setCode(code);
+		organization.setName(name);
+		
+		
+		int ret = CptedController.getInstance().signUp(organization);
+
 		
 	}
 

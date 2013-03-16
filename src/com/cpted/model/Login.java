@@ -2,15 +2,26 @@ package com.cpted.model;
 
 public class Login {
 	private String id;
-	private String pw;
+	private String password;
 	
-	public Login(String id,String pw){
+	public Login(String id,String password){
 		this.id=id;
-		this.pw=pw;		
+		this.password=password;		
 	}
 	
 	public boolean checkUser(){
 		
 		return true;
+	}
+	
+	public String getID()
+	{
+		return id;
+		
+	}
+	public String getPassword()
+	{
+		
+		return password;
 	}
 }

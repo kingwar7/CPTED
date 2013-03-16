@@ -5,30 +5,25 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.cpted.base.BaseDaoImplement;
-import com.cpted.beans.LocationBean;
-import com.cpted.beans.MemberBean;
-import com.cpted.beans.MemberCrimeWatch;
 
-public class LocationDaoImplement extends BaseDaoImplement implements LocationDao {
+public class CentercodeDaoImplement extends BaseDaoImplement implements
+		CentercodeDao {
 
 	Connection connection = null;
 	String sql = "";
 
-	public LocationBean GetLocation(MemberBean user)
-			throws Exception {
+	// 기관 인증 코드 식별
+	public boolean CheckOrganizationAuthCode(String code) throws Exception {
 		// TODO Auto-generated method stub
-		LocationBean location = new LocationBean();	
+		boolean ret = false;
 		try {
 
 			PreparedStatement statement = null;
 			ResultSet resultSet = null;
-			
-			
-			sql = "select * from Location where user_idx = ? limit 1 order by location_idx";
+
+			sql = "select * from centercodetable where code = ?";
 			try {
 
 				Class.forName("com.mysql.jdbc.Driver");
@@ -39,23 +34,25 @@ public class LocationDaoImplement extends BaseDaoImplement implements LocationDa
 				if (connection != null) {
 
 					statement = connection.prepareStatement(sql);
-					
-					statement.setString(1, user.getID());
-					
-					
-					resultSet = statement.executeQuery();
-			
-					location.setID(resultSet
-								.getString("location_idx"));
-					location.setUserID(resultSet
-								.getString("user_idx"));
-					
-					location.setLongtitude(resultSet
-								.getString("longtitude"));
-					location.setLatitude((resultSet.getString("latitude")));
-					
-				}
 
+					statement.setString(1, code);
+
+					resultSet = statement.executeQuery();
+
+					if (resultSet.next()) {
+
+						// 코드 인증
+						resultSet.close();
+						ret = true;
+
+					} else {
+
+						resultSet.close();
+						// 코드 인증 안됨
+						ret = false;
+					}
+
+				}
 			}
 
 			catch (Exception e) {
@@ -74,17 +71,15 @@ public class LocationDaoImplement extends BaseDaoImplement implements LocationDa
 				} catch (SQLException sqlException) {
 
 				}
-				
+
 			}
 
-		}
-
-		catch (Exception e) {
+		} catch (Exception e) {
 			logger.error("AccidentDaoImplement : " + e.toString());
 			throw e;
 		}
-		
-		
-		return location;
+
+		return ret;
 	}
+
 }
