@@ -1,26 +1,28 @@
 package com.cpted.servlet;
 
 import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.cpted.beans.AccidentEmergency;
 import com.cpted.controller.process.CptedController;
-import com.cpted.model.Login;
-import com.google.gson.Gson;
 
 /**
- * Servlet implementation class LogInServlet
+ * Servlet implementation class AccidentEmergencyListServlet
  */
-public class LogInServlet extends HttpServlet {
+public class AccidentEmergencyListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LogInServlet() {
+    public AccidentEmergencyListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -39,25 +41,24 @@ public class LogInServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		String id = request.getParameter("ID");
-		String password = request.getParameter("PASSWORD");
-		Login login = new Login(id,password);
-		
-		if(CptedController.getInstance().checklogIn(login))
+		HttpSession session = request.getSession();
+		String center_id = (String)session.getAttribute("CENTED_ID");
+		if(center_id!=null)
 		{
-			String centeridx = CptedController.getInstance().getCenterIDx(login);
-			HttpSession session = request.getSession();
-			session.setAttribute("LOGIN_ID", login.getID());
-			session.setAttribute("CENTED_ID", centeridx);
-		
-			Gson gson = new Gson();
-			String loginJson = gson.toJson(login);
-			System.out.println(loginJson);
+			List<AccidentEmergency> accidentEmergencylist = CptedController.getInstance().GetUncheckedAccidentEmegencyList(center_id);
+			
+			request.setAttribute("AccidentEmergencylist", accidentEmergencylist);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/receiveAccident.jsp");
+			
+			dispatcher.forward(request, response);
 		}
 		else
-		{	
-			System.out.println("Login fail");
+		{
+			System.out.println("no center_id in accidentemergencylist");
+			
 		}
+		
+				
 	}
 
 }

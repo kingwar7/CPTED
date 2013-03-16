@@ -343,7 +343,7 @@ public class OrganizationDaoImplement extends BaseDaoImplement implements
 			
 			PreparedStatement statement = null;
 			ResultSet resultSet = null;
-			sql = "select * from center where id = ? and password = ? limit 1";
+			sql = "select * from center where id = ? and password = ?";
 			try {
 
 				Class.forName("com.mysql.jdbc.Driver");
@@ -354,12 +354,14 @@ public class OrganizationDaoImplement extends BaseDaoImplement implements
 				if (connection != null) {
 
 					statement = connection.prepareStatement(sql);
-
+					
 					statement.setString(1, id);
 					statement.setString(2, password);
 					resultSet = statement.executeQuery();
+					if(resultSet.next())
+					{
 					centerIDx = resultSet.getString("center_idx");
-					
+					}
 
 				}
 			}

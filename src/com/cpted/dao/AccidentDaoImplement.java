@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 //import com.microsoft.sqlserver.jdbc.*;
 import com.cpted.base.BaseDaoImplement;
 import com.cpted.beans.*;
@@ -222,7 +224,7 @@ public class AccidentDaoImplement extends BaseDaoImplement implements
 	
 
 	// AccidentEmergency list
-	public List<AccidentEmergency> LoadAccidentEmegencyCurrent()
+	public List<AccidentEmergency> LoadAccidentEmegencyCurrent(String center_idx)
 			throws Exception {
 		// TODO Auto-generated method stub
 		try {
@@ -234,27 +236,30 @@ public class AccidentDaoImplement extends BaseDaoImplement implements
 			sql = "select * from report, chargedarea where report.type=2 and "
 					+ "report.checked=0 and " + "chargedarea.center_idx = ? "
 					+ "and chargedarea.checked = 1 and "
-					+ "report.longtitude < chargedarea.right and "
-					+ "report.longtitude > chargedarea.left and "
+					+ "report.longtitude < chargedarea.bottomright and "
+					+ "report.longtitude > chargedarea.topleft and "
 					+ "report.latitude < chargedarea.top and "
 					+ "report.latitude > chargedarea.bottom";
 			try {
 
 				Class.forName("com.mysql.jdbc.Driver");
-
+				
+				
 				connection = DriverManager.getConnection(
 						"jdbc:mysql://localhost:3306/cpteddb", "root",
 						"gpem4162");
 				if (connection != null) {
 
 					statement = connection.prepareStatement(sql);
-					// // statement.setString(1, /*center_id*/);
+					
+				
+					statement.setString(1, center_idx);
 					resultSet = statement.executeQuery();
 					while (resultSet.next()) {
 						AccidentEmergency accidentEmergency = new AccidentEmergency();
 
-//						accidentEmergency.setID(resultSet
-//								.getString("report_idx"));
+						accidentEmergency.setContent(resultSet
+								.getString("content"));
 						accidentEmergency.setDate(resultSet
 								.getString("datetime"));
 						accidentEmergency.setCategorize(resultSet

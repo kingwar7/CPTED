@@ -4,6 +4,7 @@
 <head>
 <!--  test123 -->
 	<%@include file="/jsp/common.jsp"%>
+	<%@taglib prefix = "c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<title>CPTED_HOME</title>	
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <style type="text/css">
@@ -188,6 +189,7 @@
 </head>
 <body>
 	<%@include file="/jsp/header.jsp"%>	
+	
 	<div id="container" style="width:100%; height:100%; background-color: yellow;">
    		<div id="content">
 	   		<div id="map_canvas" style="width:800px; height:600px; float: left;"></div>
@@ -215,9 +217,10 @@
 			<div>
 				<div class="detailAccident">
 					<ul>
-						<li class="accident" longitude="37.5678819632233" latitude="126.82389736175537">aaa</li>
-						<li class="accident" longitude="37.554444" latitude="126.946158">bbb</li>
-						<li class="accident" longitude="40.40168295492184" latitude="-3.7206101417541504">ccc</li>
+					 <c:forEach var="cnt" begin="0" end = "1">
+						<li class="accident" longitude="${AccidentEmergencylist[cnt].longtitude}" latitude="${AccidentEmergencylist[cnt].latitude}">"${AccidentEmergencylist[cnt].content}"</li>
+												
+					 </c:forEach>
 					</ul>
 				</div>
 				<div class="detailAccident">

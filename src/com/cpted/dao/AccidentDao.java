@@ -8,7 +8,8 @@ import com.cpted.beans.AccidentGeneral;
 import com.cpted.beans.AccidentShare;
 
 public interface AccidentDao {
-	public List<AccidentEmergency> LoadAccidentEmegencyCurrent() throws Exception;
+	public List<AccidentEmergency> LoadAccidentEmegencyCurrent(String center_idx)
+			throws Exception;
 	
 	public List<AccidentGeneral> LoadAccidentGeneralCurrent() throws Exception;
 	
