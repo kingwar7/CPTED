@@ -15,6 +15,8 @@
     <script type="text/javascript"
       src="http://maps.googleapis.com/maps/api/js?v=3.9?key=AIzaSyCTNbzs5ZMEbnDxpi58ku_nsdWnE5fVZsk&sensor=false">
     </script>
+   <!-- <script type="text/javascript" src="/js/webWorker.js"></script> -->
+  	<script type="text/javascript" src="/js/common.js"></script>
     <script type="text/javascript">
 
     	var longitude;//경도
@@ -25,6 +27,23 @@
     	var nearbyUserMaker=[];//사건 근처의 사용자들의 마커 객체
     	var userMaker;//사용자의 마커 객체
     	var map;//google maps 객체
+    	
+    	var nowNorthEastLat;//현재 지도상의 북동쪽 위도
+		var nowNorthEastLng;//현재 지도상의 북동쪽 경도
+		var nowSouthWestLat;//현재 지도상의 남서쪽 위도
+		var nowSouthWestLng;//현재 지도상의 남서쪽 경도
+		
+		var initNorthEastLat=0;//현재 지도상의 북동쪽 위도
+		var initNorthEastLng=0;//현재 지도상의 북동쪽 경도
+		var initSouthWestLat=0;//현재 지도상의 남서쪽 위도
+		var initSouthWestLng=0;//현재 지도상의 남서쪽 경도
+		
+		var reqNorthEastLat;//서버로 요청할 북동쪽 위도
+		var reqNorthEastLng;//서버로 요청할 북동쪽 경도
+		var reqSouthWestLat;//서버로 요청할 남서쪽 위도
+		var reqSouthWestLng;//서버로 요청할 남서쪽 경도
+		
+    	
     	
     	//test
     	var testJsonData;
@@ -39,7 +58,8 @@
 			longitude=$("#totalAccident"+" li:first-child").attr("longitude");
 			latitude=$("#totalAccident"+" li:first-child").attr("latitude");
 			accidentContent=$("#totalAccident"+" li:first-child").text();
-			clickAccident();
+			clickAccident();//사건 클릭시 수행하는 함수
+			
 		});	
     	
 		//map 초기화 함수
@@ -61,19 +81,17 @@
 		          animation: google.maps.Animation.DROP
 			});
 			
-			/*
-			nearbyUser=[new google.maps.LatLng(52.511467, 13.447179),
-				        new google.maps.LatLng(52.549061, 13.422975),
-				        new google.maps.LatLng(52.497622, 13.396110),
-				        new google.maps.LatLng(52.517683, 13.394393)];
-			*/
-			//nearbyUser=[new google.maps.LatLng(data.)];
+			
+			mapsEventAddListener();//지도의 범위가 변경시 수행하는 함수	
 			
 			nearbyUser=new Array();
+			
 			for(var i=0; i<data.personTotal;i++){
 				nearbyUser.push(new google.maps.LatLng(data.personData[i].longitude , data.personData[i].latitude));				
 			}
-			dropNearByUser();
+			
+			dropNearByUser();//마커 떨구는 수행함수
+			
 			
 			/*
 			var circleOptions = {
@@ -83,6 +101,7 @@
 					  editable: true
 					};
 					var circle = new google.maps.Circle(circleOptions);*/
+		
 		}	
 		
 		//accident click시 발동하는 함수
@@ -96,7 +115,7 @@
 		}
 		
 		var iterator;
-		
+		//사용자 근처에 약간의 인터벌을 두고 마커 떨구기 함수
 		function dropNearByUser() {
 			iterator=0;
 			for (var i = 0; i < nearbyUser.length; i++) {
@@ -105,18 +124,72 @@
 				}, i * 200);
 			}
 		}
-		
+		//실제 마커 떨구면서 속성값 부여하는 함수
 		function addMarker() {
 			nearbyUserMaker.push(new google.maps.Marker({
 				position: nearbyUser[iterator],
 				map: map,
 				draggable: false,
-				animation: google.maps.Animation.DROP
+				animation: google.maps.Animation.DROP,
+				title: data.personData[iterator].type
 			}));
 			iterator++;
 		}
-
 		
+		
+		
+		//google maps에 이벤트 등록 함수
+		function mapsEventAddListener(){
+			//현재 지도의 바운드(범위)를 리스너 등록
+			google.maps.event.addListener(map, 'bounds_changed', function() {
+				//console.log (map.getBounds().getNorthEast().lat()+" / "+map.getBounds().getNorthEast().lng()+"|"+map.getBounds().getSouthWest().lat()+" / "+map.getBounds().getSouthWest().lng());
+				var bounds=map.getBounds();
+				//현재 지도 범위
+				nowNorthEastLat=bounds.getNorthEast().lat();
+				nowNorthEastLng=bounds.getNorthEast().lng();
+				nowSouthWestLat=bounds.getSouthWest().lat();
+				nowSouthWestLng=bounds.getSouthWest().lng();
+				//요청 할 지도 범위
+				reqNorthEastLat=nowNorthEastLat+0.01;
+				reqNorthEastLng=nowNorthEastLng+0.01;
+				reqSouthWestLat=nowSouthWestLat-0.01;
+				reqSouthWestLng=nowSouthWestLng-0.01;
+				
+				mapsInitBounds();
+			});
+			//google.maps.event.addListenerOnce(map, 'idle', function(){
+		    //    alert(this.getBounds());
+		    //});
+		}
+		
+		//데이터 갱신되기 전의 maps 경계선 init하는 함수
+		function mapsInitBounds(){
+			//max바운드가 정의되어있지 않으면 req 데이터 세팅
+			if(initNorthEastLat == 0 || initNorthEastLng == 0 || initSouthWestLat == 0 || initSouthWestLng == 0){
+				initNorthEastLat=reqNorthEastLat;
+				initNorthEastLng=reqNorthEastLng;
+				initSouthWestLat=reqSouthWestLat;
+				initSouthWestLng=reqSouthWestLng;
+			}
+			//console.log(nowNorthEastLat +","+ initNorthEastLat +","+ nowNorthEastLng +","+ initNorthEastLng +" \n "+ nowSouthWestLat +","+ initSouthWestLat +","+ nowSouthWestLng +","+ initSouthWestLng);
+			
+			
+			if(nowNorthEastLat > initNorthEastLat || nowNorthEastLng > initNorthEastLng || nowSouthWestLat < initSouthWestLat || nowSouthWestLng < initSouthWestLng){
+				
+				initNorthEastLat=reqNorthEastLat;
+				initNorthEastLng=reqNorthEastLng;
+				initSouthWestLat=reqSouthWestLat;
+				initSouthWestLng=reqSouthWestLng;	
+				
+				var latLngObj={'northEastLat':reqNorthEastLat,'northEastLng':reqNorthEastLng,'southWestLat':reqSouthWestLat,'southWestLng':reqSouthWestLng};			
+				var latLngObjJson=JSON.stringify(latLngObj);	
+				
+				$.post("MarkerServlet",{"data": latLngObjJson},function(data){
+					console.log("maker load");
+					//여기서 마커 찍는 함수 호출 두둥!!!
+				}, "json");
+			}			
+		}
 		
 		//test
 		function testJson(){
@@ -156,7 +229,7 @@
 			var reMakeJson={"key":"test","personTotal":4,"personData":jsonArr};			
 			testJsonData=JSON.stringify(reMakeJson);
 
-			data = jQuery.parseJSON(testJsonData);			
+			data = jQuery.parseJSON(testJsonData);
 			/*
 			{
 				"key":"test",
@@ -169,25 +242,20 @@
 			} 
 			*/
 		}
+		//test
 		
-		function objToJson(obj){
-			var json={};
-			for(var memberField in obj){
-				if(obj.hasOwnProperty(memberField)){
-					json[memberField]=obj[memberField];
-				}
-			}
-			return json;
-		}
-		//tes  t
+		
+	
+		
 		
 		
 		//initialize 함수 binding
 		google.maps.event.addDomListener(window, 'load', initialize);
     </script>
 </head>
-<body>
+<body lang="ko">
 	<%@include file="/jsp/header.jsp"%>	
+	 
 	<div id="container" style="width:100%; height:100%; background-color: yellow;">
    		<div id="content">
 	   		<div id="map_canvas" style="width:800px; height:600px; float: left;"></div>

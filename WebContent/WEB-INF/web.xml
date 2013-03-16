@@ -50,4 +50,14 @@
     <servlet-name>MovePageServlet</servlet-name>
     <url-pattern>/MovePageServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MarkerServlet</display-name>
+    <servlet-name>MarkerServlet</servlet-name>
+    <servlet-class>com.cpted.servlet.MarkerServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MarkerServlet</servlet-name>
+    <url-pattern>/MarkerServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

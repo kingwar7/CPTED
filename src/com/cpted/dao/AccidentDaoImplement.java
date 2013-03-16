@@ -410,7 +410,7 @@ public class AccidentDaoImplement extends BaseDaoImplement implements
 
 						switch (Integer.parseInt(resultSet.getString("type"))) {
 						case 0:
-							AccidentShare accidentShare = new AccidentShare();
+							AccidentBean accidentShare = new AccidentShare();
 
 							accidentShare.setID(resultSet
 									.getString("report_idx"));
