@@ -16,9 +16,6 @@
 			var source;
 			if(typeof(EventSource) != 'undefined'){
 				source = new EventSource('http://210.118.74.203:8081/SseServlet?param=accident');
-				/*
-				
-				*/
 				source.onmessage = function(event){
 					//$('#time').html(event.data);
 					console.log("Receive data : "+event.data);

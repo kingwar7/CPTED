@@ -52,6 +52,15 @@
   </servlet-mapping>
   <servlet>
     <description></description>
+    <display-name>MarkerServlet</display-name>
+    <servlet-name>MarkerServlet</servlet-name>
+    <servlet-class>com.cpted.servlet.MarkerServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MarkerServlet</servlet-name>
+    <url-pattern>/MarkerServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <display-name>SignUpServlet</display-name>
     <servlet-name>SignUpServlet</servlet-name>
     <servlet-class>com.cpted.servlet.SignUpServlet</servlet-class>
@@ -109,6 +118,7 @@
   <servlet-mapping>
     <servlet-name>AddAccidentEmergencyServlet</servlet-name>
     <url-pattern>/AddAccidentEmergencyServlet</url-pattern>
+
   </servlet-mapping>
   <servlet>
     <description></description>
