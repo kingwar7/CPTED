@@ -90,4 +90,24 @@
     <servlet-name>AddAccidentGeneralServlet</servlet-name>
     <url-pattern>/AddAccidentGeneralServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AddAccidentShareServlet</display-name>
+    <servlet-name>AddAccidentShareServlet</servlet-name>
+    <servlet-class>com.cpted.servlet.AddAccidentShareServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddAccidentShareServlet</servlet-name>
+    <url-pattern>/AddAccidentShareServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AddAccidentEmergencyServlet</display-name>
+    <servlet-name>AddAccidentEmergencyServlet</servlet-name>
+    <servlet-class>com.cpted.servlet.AddAccidentEmergencyServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddAccidentEmergencyServlet</servlet-name>
+    <url-pattern>/AddAccidentEmergencyServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

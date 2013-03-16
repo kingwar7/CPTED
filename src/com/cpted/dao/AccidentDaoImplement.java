@@ -83,6 +83,143 @@ public class AccidentDaoImplement extends BaseDaoImplement implements
 
 		return ret;
 	}
+	
+	
+	public boolean AddAccidentEmergency(AccidentEmergency accidentEmergency) throws Exception {
+		boolean ret = false;
+
+		// TODO Auto-generated method stub
+		try {
+
+			PreparedStatement statement = null;
+			ResultSet resultSet = null;
+			
+			sql = "insert into report(datetime,type,longtitude,latitude,content,checked,user_idx,image,degree) values (?,?,?,?,?,?,?,?,?)";
+			
+			try {
+
+				Class.forName("com.mysql.jdbc.Driver");
+
+				connection = DriverManager.getConnection(
+						"jdbc:mysql://localhost:3306/cpteddb", "root",
+						"gpem4162");
+				if (connection != null) {
+
+					
+					statement = connection.prepareStatement(sql);
+					statement.setString(1, accidentEmergency.getDate());
+					statement.setString(2, accidentEmergency.getCategorize());
+					statement.setString(3, accidentEmergency.getLongtitude());
+					statement.setString(4, accidentEmergency.getLatitude());
+				
+					statement.setString(5, accidentEmergency.getContent());
+			
+					statement.setString(6, Integer.toString(accidentEmergency.getChecked()));
+					statement.setString(7, accidentEmergency.getUserid());
+					statement.setString(8, "0");
+					statement.setString(9, "0");
+										
+					statement.executeUpdate();
+					ret = true;
+				}
+
+			}
+
+			catch (Exception e) {
+				System.out.println("Exception " + e.getMessage());
+				e.printStackTrace();
+			} finally {
+				try {
+
+					if (null != connection)
+						connection.close();
+					if (null != statement)
+						statement.close();
+					if (null != resultSet)
+						resultSet.close();
+
+				} catch (SQLException sqlException) {
+
+				}
+			}
+		}
+
+		catch (Exception e) {
+			logger.error("AccidentDaoImplement : " + e.toString());
+			throw e;
+		}
+
+		return ret;
+	}
+	
+	
+	public boolean AddAccidentShare(AccidentShare accidentShare) throws Exception {
+		boolean ret = false;
+
+		// TODO Auto-generated method stub
+		try {
+
+			PreparedStatement statement = null;
+			ResultSet resultSet = null;
+			
+			sql = "insert into report(datetime,type,longtitude,latitude,image,content,degree,checked,user_idx) values (?,?,?,?,?,?,?,?,?)";
+			
+			try {
+
+				Class.forName("com.mysql.jdbc.Driver");
+
+				connection = DriverManager.getConnection(
+						"jdbc:mysql://localhost:3306/cpteddb", "root",
+						"gpem4162");
+				if (connection != null) {
+
+					
+					statement = connection.prepareStatement(sql);
+					statement.setString(1, accidentShare.getDate());
+					statement.setString(2, accidentShare.getCategorize());
+					statement.setString(3, (accidentShare.getLongtitude()));
+					statement.setString(4, (accidentShare.getLatitude()));
+					statement.setString(5, accidentShare.getPhoto());
+					statement.setString(6, accidentShare.getContent());
+					statement.setString(7, accidentShare.getDegree());
+					statement.setString(8, Integer.toString(accidentShare.getChecked()));
+					statement.setString(9, accidentShare.getUserid());
+					
+										
+					statement.executeUpdate();
+					ret = true;
+				}
+
+			}
+
+			catch (Exception e) {
+				System.out.println("Exception " + e.getMessage());
+				e.printStackTrace();
+			} finally {
+				try {
+
+					if (null != connection)
+						connection.close();
+					if (null != statement)
+						statement.close();
+					if (null != resultSet)
+						resultSet.close();
+
+				} catch (SQLException sqlException) {
+
+				}
+			}
+		}
+
+		catch (Exception e) {
+			logger.error("AccidentDaoImplement : " + e.toString());
+			throw e;
+		}
+
+		return ret;
+	}
+	
+	
 
 	// AccidentEmergency list
 	public List<AccidentEmergency> LoadAccidentEmegencyCurrent()

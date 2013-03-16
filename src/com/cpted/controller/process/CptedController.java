@@ -3,7 +3,9 @@ package com.cpted.controller.process;
 import javax.servlet.http.HttpSession;
 
 import com.cpted.base.BaseController;
+import com.cpted.beans.AccidentEmergency;
 import com.cpted.beans.AccidentGeneral;
+import com.cpted.beans.AccidentShare;
 import com.cpted.beans.OrganizationBean;
 import com.cpted.controller.*;
 import com.cpted.model.Login;
@@ -140,8 +142,41 @@ public class CptedController extends BaseController {
 		
 	
 	}
+
+	public boolean AddAccidentShare(AccidentShare accidentShare)
+	{
 	
+		boolean ret=false;
+		
+		try {
+			ret = daoController.getAccidentDao().AddAccidentShare(accidentShare);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return ret;
+		
 	
+	}
 	
+	public boolean AddAccidentEmergency(AccidentEmergency accidentEmergency)
+	{
+	
+		boolean ret=false;
+		
+		try {
+			ret = daoController.getAccidentDao().AddAccidentEmergency(accidentEmergency);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return ret;
+		
+	
+	}
 	
 }
