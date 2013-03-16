@@ -1,3 +1,4 @@
+
 package com.cpted.beans;
 
 public class AccidentGeneral extends AccidentBean {

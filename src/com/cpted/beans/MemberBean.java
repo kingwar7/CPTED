@@ -10,9 +10,6 @@ public abstract class MemberBean {
 	private int gender;
 	private String etc;
 	
-	
-	
-
 	public String getID() {
 		return id;
 	}

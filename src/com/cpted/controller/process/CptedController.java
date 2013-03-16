@@ -3,6 +3,7 @@ package com.cpted.controller.process;
 import javax.servlet.http.HttpSession;
 
 import com.cpted.base.BaseController;
+import com.cpted.beans.AccidentGeneral;
 import com.cpted.beans.OrganizationBean;
 import com.cpted.controller.*;
 import com.cpted.model.Login;
@@ -107,6 +108,7 @@ public class CptedController extends BaseController {
 
 	}
 
+	//로그인시에 center의 고유값 가져와서 session에 넣어두기 위해서
 	public String getCenterIDx(Login login) {
 		String centerid = "";
 		try {
@@ -119,5 +121,27 @@ public class CptedController extends BaseController {
 
 		return centerid;
 	}
-
+	
+	
+	public boolean AddAccidentGeneral(AccidentGeneral accidentGeneral)
+	{
+	
+		boolean ret=false;
+		
+		try {
+			ret = daoController.getAccidentDao().AddAccidentGeneral(accidentGeneral);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return ret;
+		
+	
+	}
+	
+	
+	
+	
 }
