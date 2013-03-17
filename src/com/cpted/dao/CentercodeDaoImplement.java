@@ -10,7 +10,14 @@ import com.cpted.base.BaseDaoImplement;
 
 public class CentercodeDaoImplement extends BaseDaoImplement implements
 		CentercodeDao {
-
+	String connectionString =
+			"jdbc:sqlserver://ihzwa48g5r.database.windows.net:1433;" +
+			"database=cptedsqldb;" +
+			"user=dean4208@ihzwa48g5r;" +
+			"password=gpem4162!;encrypt=true;" +
+			"hostNameInCertificate=*.database.windows.net;" +
+			"loginTimeout=30";
+	
 	Connection connection = null;
 	String sql = "";
 
@@ -26,11 +33,14 @@ public class CentercodeDaoImplement extends BaseDaoImplement implements
 			sql = "select * from centercodetable where code = ?";
 			try {
 
-				Class.forName("com.mysql.jdbc.Driver");
-
-				connection = DriverManager.getConnection(
-						"jdbc:mysql://localhost:3306/cpteddb", "root",
-						"gpem4162");
+//				Class.forName("com.mysql.jdbc.Driver");
+//
+//				connection = DriverManager.getConnection(
+//						"jdbc:mysql://localhost:3306/cpteddb", "root",
+//						"gpem4162");
+				Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+				connection = DriverManager.getConnection(connectionString);
+				
 				if (connection != null) {
 
 					statement = connection.prepareStatement(sql);

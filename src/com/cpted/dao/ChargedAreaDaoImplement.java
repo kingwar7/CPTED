@@ -15,7 +15,13 @@ import com.cpted.beans.MemberCrimeWatch;
 
 public class ChargedAreaDaoImplement extends BaseDaoImplement implements
 		ChargedAreaDao {
-
+	String connectionString =
+			"jdbc:sqlserver://ihzwa48g5r.database.windows.net:1433;" +
+			"database=cptedsqldb;" +
+			"user=dean4208@ihzwa48g5r;" +
+			"password=gpem4162!;encrypt=true;" +
+			"hostNameInCertificate=*.database.windows.net;" +
+			"loginTimeout=30";
 	Connection connection = null;
 	String sql = "";
 
@@ -30,14 +36,20 @@ public class ChargedAreaDaoImplement extends BaseDaoImplement implements
 			PreparedStatement statement = null;
 			ResultSet resultSet = null;
 
+			
 			sql = "select * from chagedarea where center_idx = ? and checked = 1";
 			try {
 
 				Class.forName("com.mysql.jdbc.Driver");
 
-				connection = DriverManager.getConnection(
-						"jdbc:mysql://localhost:3306/cpteddb", "root",
-						"gpem4162");
+//				connection = DriverManager.getConnection(
+//						"jdbc:mysql://localhost:3306/cpteddb", "root",
+//						"gpem4162");
+				
+				Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+				connection = DriverManager.getConnection(connectionString);
+				
+				
 				if (connection != null) {
 
 					statement = connection.prepareStatement(sql);

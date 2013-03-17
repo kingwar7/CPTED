@@ -61,7 +61,7 @@ public class AddAccidentGeneralServlet extends HttpServlet {
 			AccidentGeneral accidentGeneral = new AccidentGeneral();
 			accidentGeneral.setDate(datetime);
 			accidentGeneral.setCategorize("1");
-			accidentGeneral.setLongtitude(longtitude);
+			accidentGeneral.setLongitude(longtitude);
 			accidentGeneral.setLatitude(latitude);
 			accidentGeneral.setPhoto(image);
 			accidentGeneral.setContent(content);

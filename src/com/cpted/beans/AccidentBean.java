@@ -6,7 +6,7 @@ public abstract class AccidentBean implements Comparable<AccidentBean> {
 //	private String location;//경위??
 //	private String id;//?�송???�람
 	private String content;
-	private String longtitude;
+	private String longitude;
 	private String latitude;
 	private int checked;
 	private String user_id;
@@ -38,11 +38,11 @@ public abstract class AccidentBean implements Comparable<AccidentBean> {
 		this.categorize = categorize;
 	}
 	
-	public String getLongtitude() {
-		return longtitude;
+	public String getLongitude() {
+		return longitude;
 	}
-	public void setLongtitude(String longtitude) {
-		this.longtitude = longtitude;
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
 	}
 	
 	public String getLatitude() {

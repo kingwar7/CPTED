@@ -285,7 +285,7 @@
 				<div class="detailAccident">
 					<ul>
 					 <c:forEach var="cnt" begin="0" end = "1">
-						<li class="accident" longitude="${AccidentEmergencylist[cnt].longtitude}" latitude="${AccidentEmergencylist[cnt].latitude}">"${AccidentEmergencylist[cnt].content}"</li>
+						<li class="accident" longitude="${AccidentEmergencylist[cnt].longitude}" latitude="${AccidentEmergencylist[cnt].latitude}">"${AccidentEmergencylist[cnt].content}"</li>
 												
 					 </c:forEach>
 					</ul>

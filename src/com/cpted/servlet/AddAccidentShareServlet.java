@@ -58,7 +58,7 @@ public class AddAccidentShareServlet extends HttpServlet {
 			AccidentShare accidentShare = new AccidentShare();
 			accidentShare.setDate(datetime);
 			accidentShare.setCategorize("0");
-			accidentShare.setLongtitude(longtitude);
+			accidentShare.setLongitude(longtitude);
 			accidentShare.setLatitude(latitude);
 			accidentShare.setPhoto(image);
 			accidentShare.setContent(content);

@@ -46,7 +46,7 @@ public class AccidentEmergencyListServlet extends HttpServlet {
 		if(center_id!=null)
 		{
 			List<AccidentEmergency> accidentEmergencylist = CptedController.getInstance().GetUncheckedAccidentEmegencyList(center_id);
-			
+
 			request.setAttribute("AccidentEmergencylist", accidentEmergencylist);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("jsp/receiveAccident.jsp");
 			
@@ -57,7 +57,14 @@ public class AccidentEmergencyListServlet extends HttpServlet {
 			System.out.println("no center_id in accidentemergencylist");
 			
 		}
-		
+//		String a = accidentEmergencylist.get(2).getLongitude();
+//		double ab = Double.parseDouble(a);
+//		 a = accidentEmergencylist.get(1).getLongtitude();
+//		 ab = Double.parseDouble(a);
+//		 a = accidentEmergencylist.get(0).getLongtitude();
+//		 ab = Double.parseDouble(a);
+//		 a = accidentEmergencylist.get(3).getLongtitude();
+//		 ab = Double.parseDouble(a);
 				
 	}
 

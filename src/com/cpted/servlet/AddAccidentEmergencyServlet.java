@@ -47,7 +47,6 @@ public class AddAccidentEmergencyServlet extends HttpServlet {
 		String datetime = request.getParameter("DATETIME");
 		String longtitude = request.getParameter("LONGTITUDE");
 		String latitude = request.getParameter("LATITUDE");
-		
 		String content = request.getParameter("CONTENT");
 		String userid = request.getParameter("USERID");
 		
@@ -57,12 +56,10 @@ public class AddAccidentEmergencyServlet extends HttpServlet {
 			AccidentEmergency accidentEmergency = new AccidentEmergency();
 			accidentEmergency.setDate(datetime);
 			accidentEmergency.setCategorize("2");
-			accidentEmergency.setLongtitude(longtitude);
+			accidentEmergency.setLongitude(longtitude);
 			accidentEmergency.setLatitude(latitude);
-//			accidentEmergency.setPhoto(image);
 			accidentEmergency.setContent(content);
-//			accidentEmergency.setDegree(degree);
-			accidentEmergency.setChecked(0);
+			accidentEmergency.setChecked(0);//defalut
 			accidentEmergency.setUserid(userid);
 	
 			if(CptedController.getInstance().AddAccidentEmergency(

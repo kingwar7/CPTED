@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
+import com.microsoft.sqlserver.jdbc.*;
 import javax.servlet.http.HttpSession;
 
 //import com.microsoft.sqlserver.jdbc.*;
@@ -15,6 +15,13 @@ import com.cpted.beans.*;
 public class AccidentDaoImplement extends BaseDaoImplement implements
 		AccidentDao {
 
+	String connectionString =
+			"jdbc:sqlserver://ihzwa48g5r.database.windows.net:1433;" +
+			"database=cptedsqldb;" +
+			"user=dean4208@ihzwa48g5r;" +
+			"password=gpem4162!;encrypt=true;" +
+			"hostNameInCertificate=*.database.windows.net;" +
+			"loginTimeout=30";
 	Connection connection = null;
 	String sql = "";
 
@@ -29,22 +36,25 @@ public class AccidentDaoImplement extends BaseDaoImplement implements
 			PreparedStatement statement = null;
 			ResultSet resultSet = null;
 			
-			sql = "insert into report(datetime,type,longtitude,latitude,image,content,degree,checked,user_idx) values (?,?,?,?,?,?,?,?,?)";
+			sql = "insert into report(datetime,type,longitude,latitude,image,content,degree,checked,member_idx) values (?,?,?,?,?,?,?,?,?)";
 			
 			try {
 
-				Class.forName("com.mysql.jdbc.Driver");
+//				Class.forName("com.mysql.jdbc.Driver");
 
-				connection = DriverManager.getConnection(
-						"jdbc:mysql://localhost:3306/cpteddb", "root",
-						"gpem4162");
+//				connection = DriverManager.getConnection(
+//						"jdbc:mysql://localhost:3306/cpteddb", "root",
+//						"gpem4162");
+				
+				Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+				connection = DriverManager.getConnection(connectionString);
 				if (connection != null) {
 
 					
 					statement = connection.prepareStatement(sql);
 					statement.setString(1, accidentGeneral.getDate());
 					statement.setString(2, accidentGeneral.getCategorize());
-					statement.setString(3, (accidentGeneral.getLongtitude()));
+					statement.setString(3, (accidentGeneral.getLongitude()));
 					statement.setString(4, (accidentGeneral.getLatitude()));
 					statement.setString(5, accidentGeneral.getPhoto());
 					statement.setString(6, accidentGeneral.getContent());
@@ -96,30 +106,34 @@ public class AccidentDaoImplement extends BaseDaoImplement implements
 			PreparedStatement statement = null;
 			ResultSet resultSet = null;
 			
-			sql = "insert into report(datetime,type,longtitude,latitude,content,checked,user_idx,image,degree) values (?,?,?,?,?,?,?,?,?)";
+			sql = "insert into report(datetime,type,longitude,latitude,content,checked,member_idx,image,degree) values (?,?,?,?,?,?,?,?,?)";
 			
 			try {
 
-				Class.forName("com.mysql.jdbc.Driver");
-
-				connection = DriverManager.getConnection(
-						"jdbc:mysql://localhost:3306/cpteddb", "root",
-						"gpem4162");
+//				Class.forName("com.mysql.jdbc.Driver");
+//
+//				connection = DriverManager.getConnection(
+//						"jdbc:mysql://localhost:3306/cpteddb", "root",
+//						"gpem4162");
+				
+				Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+				connection = DriverManager.getConnection(connectionString);
+				
 				if (connection != null) {
 
 					
 					statement = connection.prepareStatement(sql);
 					statement.setString(1, accidentEmergency.getDate());
 					statement.setString(2, accidentEmergency.getCategorize());
-					statement.setString(3, accidentEmergency.getLongtitude());
-					statement.setString(4, accidentEmergency.getLatitude());
+					statement.setDouble(3, Double.parseDouble(accidentEmergency.getLongitude()));
+					statement.setDouble(4, Double.parseDouble(accidentEmergency.getLatitude()));
 				
 					statement.setString(5, accidentEmergency.getContent());
 			
 					statement.setString(6, Integer.toString(accidentEmergency.getChecked()));
 					statement.setString(7, accidentEmergency.getUserid());
-					statement.setString(8, "0");
-					statement.setString(9, "0");
+					statement.setString(8, "");
+					statement.setString(9, "");
 										
 					statement.executeUpdate();
 					ret = true;
@@ -164,22 +178,25 @@ public class AccidentDaoImplement extends BaseDaoImplement implements
 			PreparedStatement statement = null;
 			ResultSet resultSet = null;
 			
-			sql = "insert into report(datetime,type,longtitude,latitude,image,content,degree,checked,user_idx) values (?,?,?,?,?,?,?,?,?)";
+			sql = "insert into report(datetime,type,longitude,latitude,image,content,degree,checked,member_idx) values (?,?,?,?,?,?,?,?,?)";
 			
 			try {
 
-				Class.forName("com.mysql.jdbc.Driver");
-
-				connection = DriverManager.getConnection(
-						"jdbc:mysql://localhost:3306/cpteddb", "root",
-						"gpem4162");
+//				Class.forName("com.mysql.jdbc.Driver");
+//
+//				connection = DriverManager.getConnection(
+//						"jdbc:mysql://localhost:3306/cpteddb", "root",
+//						"gpem4162");
+				
+				Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+				connection = DriverManager.getConnection(connectionString);
 				if (connection != null) {
 
-					
+					String a = accidentShare.getLongitude();
 					statement = connection.prepareStatement(sql);
 					statement.setString(1, accidentShare.getDate());
 					statement.setString(2, accidentShare.getCategorize());
-					statement.setString(3, (accidentShare.getLongtitude()));
+					statement.setString(3, (accidentShare.getLongitude()));
 					statement.setString(4, (accidentShare.getLatitude()));
 					statement.setString(5, accidentShare.getPhoto());
 					statement.setString(6, accidentShare.getContent());
@@ -236,18 +253,21 @@ public class AccidentDaoImplement extends BaseDaoImplement implements
 			sql = "select * from report, chargedarea where report.type=2 and "
 					+ "report.checked=0 and " + "chargedarea.center_idx = ? "
 					+ "and chargedarea.checked = 1 and "
-					+ "report.longtitude < chargedarea.bottomright and "
-					+ "report.longtitude > chargedarea.topleft and "
-					+ "report.latitude < chargedarea.top and "
-					+ "report.latitude > chargedarea.bottom";
+					+ "report.longitude < chargedarea.x2 and "
+					+ "report.longitude > chargedarea.x1 and "
+					+ "report.latitude < chargedarea.y1 and "
+					+ "report.latitude > chargedarea.y2";
 			try {
 
-				Class.forName("com.mysql.jdbc.Driver");
+//				Class.forName("com.mysql.jdbc.Driver");
+//				
+//				
+//				connection = DriverManager.getConnection(
+//						"jdbc:mysql://localhost:3306/cpteddb", "root",
+//						"gpem4162");
 				
-				
-				connection = DriverManager.getConnection(
-						"jdbc:mysql://localhost:3306/cpteddb", "root",
-						"gpem4162");
+				Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+				connection = DriverManager.getConnection(connectionString);
 				if (connection != null) {
 
 					statement = connection.prepareStatement(sql);
@@ -266,8 +286,8 @@ public class AccidentDaoImplement extends BaseDaoImplement implements
 								.getString("type"));
 						accidentEmergency.setLatitude((resultSet
 								.getString("latitude")));
-						accidentEmergency.setLongtitude((resultSet
-								.getString("longtitude")));
+						accidentEmergency.setLongitude((resultSet
+								.getString("longitude")));
 						accidentEmergencyList.add(accidentEmergency);
 
 					}
@@ -320,18 +340,22 @@ public class AccidentDaoImplement extends BaseDaoImplement implements
 			sql = "select * from report, chargedarea where report.type=1 and "
 					+ "report.checked=0 and " + "chargedarea.center_idx = ? "
 					+ "and chargedarea.checked = 1 and "
-					+ "report.longtitude < chargedarea.right and "
-					+ "report.longtitude > chargedarea.left and "
+					+ "report.longitude < chargedarea.right and "
+					+ "report.longitude > chargedarea.left and "
 					+ "report.latitude < chargedarea.top and "
 					+ "report.latitude > chargedarea.bottom";
 
 			try {
-
-				Class.forName("com.mysql.jdbc.Driver");
-
-				connection = DriverManager.getConnection(
-						"jdbc:mysql://localhost:3306/cpteddb", "root",
-						"gpem4162");
+//
+//				Class.forName("com.mysql.jdbc.Driver");
+//
+//				connection = DriverManager.getConnection(
+//						"jdbc:mysql://localhost:3306/cpteddb", "root",
+//						"gpem4162");
+				
+				Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+				connection = DriverManager.getConnection(connectionString);
+				
 				if (connection != null) {
 
 					statement = connection.prepareStatement(sql);
@@ -348,8 +372,8 @@ public class AccidentDaoImplement extends BaseDaoImplement implements
 								.getString("type"));
 						accidentGeneral.setLatitude((resultSet
 								.getString("latitude")));
-						accidentGeneral.setLongtitude((resultSet
-								.getString("longtitude")));
+						accidentGeneral.setLongitude((resultSet
+								.getString("longitude")));
 						accidentGeneral.setPhoto(resultSet.getString("image"));
 						accidentGeneral.setContent(resultSet
 								.getString("content"));
@@ -410,18 +434,21 @@ public class AccidentDaoImplement extends BaseDaoImplement implements
 			sql = "select * from report, chargedarea where report.type=0 and "
 					+ "report.checked=0 and " + "chargedarea.center_idx = ? "
 					+ "and chargedarea.checked = 1 and "
-					+ "report.longtitude < chargedarea.right and "
-					+ "report.longtitude > chargedarea.left and "
+					+ "report.longitude < chargedarea.right and "
+					+ "report.longitude > chargedarea.left and "
 					+ "report.latitude < chargedarea.top and "
 					+ "report.latitude > chargedarea.bottom";
 
 			try {
-
-				Class.forName("com.mysql.jdbc.Driver");
-
-				connection = DriverManager.getConnection(
-						"jdbc:mysql://localhost:3306/cpteddb", "root",
-						"gpem4162");
+//
+//				Class.forName("com.mysql.jdbc.Driver");
+//
+//				connection = DriverManager.getConnection(
+//						"jdbc:mysql://localhost:3306/cpteddb", "root",
+//						"gpem4162");
+				
+				Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+				connection = DriverManager.getConnection(connectionString);
 				if (connection != null) {
 
 					statement = connection.prepareStatement(sql);
@@ -436,8 +463,8 @@ public class AccidentDaoImplement extends BaseDaoImplement implements
 								.setCategorize(resultSet.getString("type"));
 						accidentShare.setLatitude((resultSet
 								.getString("latitude")));
-						accidentShare.setLongtitude((resultSet
-								.getString("longtitude")));
+						accidentShare.setLongitude((resultSet
+								.getString("longitude")));
 						accidentShare.setPhoto(resultSet.getString("image"));
 						accidentShare
 								.setContent(resultSet.getString("content"));
@@ -500,18 +527,21 @@ public class AccidentDaoImplement extends BaseDaoImplement implements
 
 			sql = "select * from report r, chargedarea c "
 					+ "where r.type=0 and r.checked=0 and "
-					+ "r.longtitude < ? and " + "r.longtitude > ? and "
+					+ "r.longitude < ? and " + "r.longitude > ? and "
 					+ "r.latitude < ? and " + "r.latitude > ? and "
-					+ "r.longtitude < c.right and "
-					+ "r.longtitude > c.left and " + "r.latitude < c.top and "
+					+ "r.longitude < c.right and "
+					+ "r.longitude > c.left and " + "r.latitude < c.top and "
 					+ "r.latitude > c.bottom";
 			try {
 
-				Class.forName("com.mysql.jdbc.Driver");
-
-				connection = DriverManager.getConnection(
-						"jdbc:mysql://localhost:3306/cpteddb", "root",
-						"gpem4162");
+//				Class.forName("com.mysql.jdbc.Driver");
+//
+//				connection = DriverManager.getConnection(
+//						"jdbc:mysql://localhost:3306/cpteddb", "root",
+//						"gpem4162");
+				Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+				connection = DriverManager.getConnection(connectionString);
+				
 				if (connection != null) {
 
 					statement = connection.prepareStatement(sql);
@@ -530,8 +560,8 @@ public class AccidentDaoImplement extends BaseDaoImplement implements
 								.setCategorize(resultSet.getString("type"));
 						accidentShare.setLatitude((resultSet
 								.getString("latitude")));
-						accidentShare.setLongtitude((resultSet
-								.getString("longtitude")));
+						accidentShare.setLongitude((resultSet
+								.getString("longitude")));
 						accidentShare.setPhoto(resultSet.getString("image"));
 						accidentShare
 								.setContent(resultSet.getString("content"));
@@ -592,18 +622,22 @@ public class AccidentDaoImplement extends BaseDaoImplement implements
 			sql = "select * from report, chargedarea where "
 					+ "report.checked=0 and " + "chargedarea.center_idx = ? "
 					+ "and chargedarea.checked = 1 and "
-					+ "report.longtitude < chargedarea.right and "
-					+ "report.longtitude > chargedarea.left and "
+					+ "report.longitude < chargedarea.right and "
+					+ "report.longitude > chargedarea.left and "
 					+ "report.latitude < chargedarea.top and "
 					+ "report.latitude > chargedarea.bottom";
 
 			try {
 
-				Class.forName("com.mysql.jdbc.Driver");
-				// Establish the connection.
-				connection = DriverManager.getConnection(
-						"jdbc:mysql://localhost:3306/cpteddb", "root",
-						"gpem4162");
+//				Class.forName("com.mysql.jdbc.Driver");
+//				// Establish the connection.
+//				connection = DriverManager.getConnection(
+//						"jdbc:mysql://localhost:3306/cpteddb", "root",
+//						"gpem4162");
+				
+				Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+				connection = DriverManager.getConnection(connectionString);
+				
 				if (connection != null) {
 					// Use the connection to create the SQL statement.
 					statement = connection.prepareStatement(sql);
@@ -623,8 +657,8 @@ public class AccidentDaoImplement extends BaseDaoImplement implements
 									.getString("type"));
 							accidentShare.setLatitude((resultSet
 									.getString("latitude")));
-							accidentShare.setLongtitude((resultSet
-									.getString("longtitude")));
+							accidentShare.setLongitude((resultSet
+									.getString("longitude")));
 							accidentShare
 									.setPhoto(resultSet.getString("image"));
 							accidentShare.setContent(resultSet
@@ -645,8 +679,8 @@ public class AccidentDaoImplement extends BaseDaoImplement implements
 									.getString("type"));
 							accidentGeneral.setLatitude((resultSet
 									.getString("latitude")));
-							accidentGeneral.setLongtitude((resultSet
-									.getString("longtitude")));
+							accidentGeneral.setLongitude((resultSet
+									.getString("longitude")));
 							accidentGeneral.setPhoto(resultSet
 									.getString("image"));
 							accidentGeneral.setContent(resultSet
@@ -669,8 +703,8 @@ public class AccidentDaoImplement extends BaseDaoImplement implements
 									.getString("type"));
 							accidentEmergency.setLatitude((resultSet
 									.getString("latitude")));
-							accidentEmergency.setLongtitude((resultSet
-									.getString("longtitude")));
+							accidentEmergency.setLongitude((resultSet
+									.getString("longitude")));
 							accidentAllList.add(accidentEmergency);
 
 							break;
@@ -707,7 +741,7 @@ public class AccidentDaoImplement extends BaseDaoImplement implements
 			});
 
 			// AccidentBean a = (AccidentBean)accidentAllList.get(0);
-			// String sdf = a.getLongtitude();
+			// String sdf = a.getLongitude();
 			return accidentAllList;
 
 		} catch (Exception e) {
