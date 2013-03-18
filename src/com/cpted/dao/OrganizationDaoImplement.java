@@ -14,6 +14,14 @@ import com.cpted.beans.OrganizationBean;
 public class OrganizationDaoImplement extends BaseDaoImplement implements
 		OrganizationDao {
 
+	String connectionString =
+			"jdbc:sqlserver://ihzwa48g5r.database.windows.net:1433;" +
+			"database=cptedsqldb;" +
+			"user=dean4208@ihzwa48g5r;" +
+			"password=gpem4162!;encrypt=true;" +
+			"hostNameInCertificate=*.database.windows.net;" +
+			"loginTimeout=30";
+	
 	Connection connection = null;
 	String sql = "";
 
@@ -28,14 +36,18 @@ public class OrganizationDaoImplement extends BaseDaoImplement implements
 
 			PreparedStatement statement = null;
 			ResultSet resultSet = null;
-			sql = "insert into  center(id,password,name,code,etc) values(?,?,?,?,?)";
+			sql = "INSERT INTO center(id,password,name,code,etc) values(?,?,?,?,?)";
 			try {
 
-				Class.forName("com.mysql.jdbc.Driver");
-
-				connection = DriverManager.getConnection(
-						"jdbc:mysql://localhost:3306/cpteddb", "root",
-						"gpem4162");
+//				Class.forName("com.mysql.jdbc.Driver");
+//
+//				connection = DriverManager.getConnection(
+//						"jdbc:mysql://localhost:3306/cpteddb", "root",
+//						"gpem4162");
+				
+				Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+				connection = DriverManager.getConnection(connectionString);
+				
 				if (connection != null) {
 
 					statement = connection.prepareStatement(sql);
@@ -87,14 +99,18 @@ public class OrganizationDaoImplement extends BaseDaoImplement implements
 
 			PreparedStatement statement = null;
 			ResultSet resultSet = null;
-			sql = "select * from center where id =? and password =? ";
+			sql = "SELECT * FROM center WHERE id =? and password =? ";
 			try {
 
-				Class.forName("com.mysql.jdbc.Driver");
-
-				connection = DriverManager.getConnection(
-						"jdbc:mysql://localhost:3306/cpteddb", "root",
-						"gpem4162");
+//				Class.forName("com.mysql.jdbc.Driver");
+//
+//				connection = DriverManager.getConnection(
+//						"jdbc:mysql://localhost:3306/cpteddb", "root",
+//						"gpem4162");
+//				
+				Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+				connection = DriverManager.getConnection(connectionString);
+				
 				if (connection != null) {
 
 					statement = connection.prepareStatement(sql);
@@ -158,11 +174,16 @@ public class OrganizationDaoImplement extends BaseDaoImplement implements
 			sql = "select * from center where id =?";
 			try {
 
-				Class.forName("com.mysql.jdbc.Driver");
-
-				connection = DriverManager.getConnection(
-						"jdbc:mysql://localhost:3306/cpteddb", "root",
-						"gpem4162");
+//				Class.forName("com.mysql.jdbc.Driver");
+//
+//				connection = DriverManager.getConnection(
+//						"jdbc:mysql://localhost:3306/cpteddb", "root",
+//						"gpem4162");
+				
+				Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+				connection = DriverManager.getConnection(connectionString);
+				
+				
 				if (connection != null) {
 
 					statement = connection.prepareStatement(sql);
@@ -226,11 +247,16 @@ public class OrganizationDaoImplement extends BaseDaoImplement implements
 			sql = "update center set password =?  name= ?, etc = ? where id = ?";
 			try {
 
-				Class.forName("com.mysql.jdbc.Driver");
-
-				connection = DriverManager.getConnection(
-						"jdbc:mysql://localhost:3306/cpteddb", "root",
-						"gpem4162");
+//				Class.forName("com.mysql.jdbc.Driver");
+//
+//				connection = DriverManager.getConnection(
+//						"jdbc:mysql://localhost:3306/cpteddb", "root",
+//						"gpem4162");
+				
+				Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+				connection = DriverManager.getConnection(connectionString);
+				
+				
 				if (connection != null) {
 
 					statement = connection.prepareStatement(sql);
@@ -287,11 +313,15 @@ public class OrganizationDaoImplement extends BaseDaoImplement implements
 			sql = "delete from center where id = ?";
 			try {
 
-				Class.forName("com.mysql.jdbc.Driver");
-
-				connection = DriverManager.getConnection(
-						"jdbc:mysql://localhost:3306/cpteddb", "root",
-						"gpem4162");
+//				Class.forName("com.mysql.jdbc.Driver");
+//
+//				connection = DriverManager.getConnection(
+//						"jdbc:mysql://localhost:3306/cpteddb", "root",
+//						"gpem4162");
+				
+				Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+				connection = DriverManager.getConnection(connectionString);
+				
 				if (connection != null) {
 
 					statement = connection.prepareStatement(sql);
@@ -343,23 +373,29 @@ public class OrganizationDaoImplement extends BaseDaoImplement implements
 			
 			PreparedStatement statement = null;
 			ResultSet resultSet = null;
-			sql = "select * from center where id = ? and password = ? limit 1";
+			sql = "select * from center where id = ? and password = ?";
 			try {
 
-				Class.forName("com.mysql.jdbc.Driver");
-
-				connection = DriverManager.getConnection(
-						"jdbc:mysql://localhost:3306/cpteddb", "root",
-						"gpem4162");
+//				Class.forName("com.mysql.jdbc.Driver");
+//
+//				connection = DriverManager.getConnection(
+//						"jdbc:mysql://localhost:3306/cpteddb", "root",
+//						"gpem4162");
+				
+				Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+				connection = DriverManager.getConnection(connectionString);
+				
 				if (connection != null) {
 
 					statement = connection.prepareStatement(sql);
-
+					
 					statement.setString(1, id);
 					statement.setString(2, password);
 					resultSet = statement.executeQuery();
+					if(resultSet.next())
+					{
 					centerIDx = resultSet.getString("center_idx");
-					
+					}
 
 				}
 			}

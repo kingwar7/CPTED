@@ -36,8 +36,7 @@ public class MovePageServlet extends HttpServlet {
 		String nextPage = request.getParameter("nextPage");
 		nextPage="jsp/"+nextPage+".jsp";
 		request.getRequestDispatcher(nextPage).forward(request, response);
-		
-		
 	}
-
 }
+
+

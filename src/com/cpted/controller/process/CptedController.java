@@ -1,5 +1,8 @@
 package com.cpted.controller.process;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import com.cpted.base.BaseController;
@@ -175,8 +178,21 @@ public class CptedController extends BaseController {
 		
 		
 		return ret;
-		
+	}
 	
+	
+	public List<AccidentEmergency> GetUncheckedAccidentEmegencyList(String center_idx)
+	{
+		List<AccidentEmergency> ret = null;
+		try {
+			ret= daoController.getAccidentDao().LoadAccidentEmegencyCurrent(center_idx);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return ret;
+		
 	}
 	
 }

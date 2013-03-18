@@ -55,8 +55,7 @@ public class LogInServlet extends HttpServlet {
 			System.out.println(loginJson);
 		}
 		else
-		{
-			
+		{	
 			System.out.println("Login fail");
 		}
 	}

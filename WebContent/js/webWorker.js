@@ -1,4 +1,4 @@
-var mapsWorker;
+avar mapsWorker;
 
 function initWorker(){
 	if(typeof(Worker)!=="undefined"){
