@@ -48,6 +48,12 @@ public class AccidentDaoImplement extends BaseDaoImplement implements
 				
 				Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 				connection = DriverManager.getConnection(connectionString);
+				
+//				
+//				SqlConnectionStringBuilder cb = SqlConnectionStringBuilder(connectionString);
+				
+			
+				
 				if (connection != null) {
 
 					
