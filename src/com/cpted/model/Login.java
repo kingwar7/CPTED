@@ -1,27 +1,37 @@
 package com.cpted.model;
 
+import com.cpted.beans.LoginBean;
+
+
+
 public class Login {
-	private String id;
-	private String password;
+	private LoginBean loginBean;
 	
-	public Login(String id,String password){
-		this.id=id;
-		this.password=password;		
+	public Login(LoginBean loginBean){
+		this.loginBean=loginBean;
 	}
 	
+	public LoginBean getLoginBean() {
+		return loginBean;
+	}
+
+	public void setLoginBean(LoginBean loginBean) {
+		this.loginBean = loginBean;
+	}
+
+
+
+
 	public boolean checkUser(){
 		
 		return true;
 	}
 	
-	public String getID()
-	{
-		return id;
+	public boolean login(){
+		//정규 표현식
 		
-	}
-	public String getPassword()
-	{
 		
-		return password;
+		return true;
+		
 	}
 }
