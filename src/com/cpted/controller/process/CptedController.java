@@ -9,6 +9,7 @@ import com.cpted.base.BaseController;
 import com.cpted.beans.AccidentEmergency;
 import com.cpted.beans.AccidentGeneral;
 import com.cpted.beans.AccidentShare;
+import com.cpted.beans.LoginBean;
 import com.cpted.beans.OrganizationBean;
 import com.cpted.controller.*;
 import com.cpted.model.Login;
@@ -99,7 +100,34 @@ public class CptedController extends BaseController {
 		return ret;
 	}
 
-	public boolean checklogIn(Login login) {
+	public boolean checklogIn(LoginBean loginBean) {
+		/*
+		String id="";
+		String pw="";
+		LoginController loginController = new LoginController();
+		loginController.setDaoController(daoController);
+		
+		return loginController.login(id, pw);
+		*/
+		
+		
+		
+		boolean checkedLogin = false;
+		try {
+			LoginController loginController = new LoginController();
+			loginController.setDaoController(daoController);
+			
+			checkedLogin = loginController.login(loginBean);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return checkedLogin;
+
+		
+		/*
+		
 		boolean checkedLogin = false;
 		try {
 			checkedLogin = daoController.getOrganizationDao().checkLogin(
@@ -110,15 +138,15 @@ public class CptedController extends BaseController {
 		}
 
 		return checkedLogin;
-
+*/
 	}
 
 	//로그인시에 center의 고유값 가져와서 session에 넣어두기 위해서
-	public String getCenterIDx(Login login) {
+	public String getCenterIDx(LoginBean loginBean) {
 		String centerid = "";
 		try {
 			centerid = daoController.getOrganizationDao().getCenterIDx(
-					login.getID(), login.getPassword());
+					loginBean.getId(), loginBean.getPassword());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

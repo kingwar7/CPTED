@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.cpted.beans.LoginBean;
 import com.cpted.controller.process.CptedController;
 import com.cpted.model.Login;
 import com.google.gson.Gson;
@@ -41,17 +42,17 @@ public class LogInServlet extends HttpServlet {
 		
 		String id = request.getParameter("ID");
 		String password = request.getParameter("PASSWORD");
-		Login login = new Login(id,password);
+		LoginBean loginBean = new LoginBean(id,password);
 		
-		if(CptedController.getInstance().checklogIn(login))
+		if(CptedController.getInstance().checklogIn(loginBean))
 		{
-			String centeridx = CptedController.getInstance().getCenterIDx(login);
+			String centeridx = CptedController.getInstance().getCenterIDx(loginBean);
 			HttpSession session = request.getSession();
-			session.setAttribute("LOGIN_ID", login.getID());
+			session.setAttribute("LOGIN_ID", loginBean.getId());
 			session.setAttribute("CENTED_ID", centeridx);
 		
 			Gson gson = new Gson();
-			String loginJson = gson.toJson(login);
+			String loginJson = gson.toJson(loginBean);
 			System.out.println(loginJson);
 		}
 		else
